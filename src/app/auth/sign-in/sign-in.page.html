@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true" class="ion-text-center grid-container">
+  
+  <div id="container">
+    <strong>Login</strong>
+
+    <ion-input [(ngModel)]="email" label="Email" label="Email" label-placement="floating" fill="solid" placeholder="ex:tyr@gmail.com" aria-label="" color=""></ion-input>
+
+    <ion-input [(ngModel)]="password" type="password" label="Password" label-placement="floating" fill="solid" placeholder="password" aria-label="" color=""></ion-input>
+
+    <ion-button class="login-btn" (click)="login()" expand="block" size="large" fill="outline" color="">Login</ion-button>
+    <p>Or</p>
+
+    <ion-grid [fixed]="true">
+      <ion-row>
+        <ion-col>
+          <ion-button class="" expand="block" size="large" fill="outline" color="primary">
+            <ion-icon name="logo-linkedin"></ion-icon>
+            
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button class="" expand="block" size="large" fill="outline" color="danger">
+            <ion-icon name="logo-amazon"></ion-icon>
+            
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button class="" expand="block" size="large" fill="outline" color="tertiary">
+            <ion-icon name="logo-github"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,0 +1,54 @@
+$black : #272829;
+$gray : #61677A;
+$white : #D8D9DA;
+$milk : #FFF6E0;
+
+#container {
+    text-align: center;
+    width: 70%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50vh; /* Memposisikan container di tengah vertikal halaman */
+    transform: translateY(-50%);
+  }
+  
+  #container strong {
+    font-size: 200%;
+    font-weight:lighter;
+    text-align: left;
+    display: block;
+    line-height: 40px;
+  }
+  
+  #container p {
+    font-weight: bold;
+  }
+  
+  ion-input {
+    margin-top: 10px;
+    text-align: left;
+    --highlight-color-valid: #272829;
+  }
+  
+  ion-button {
+    margin-top: 10px;
+  }
+
+  .login-btn {
+    --border-radius: 0px;
+    --background-activated: #61677A;
+    --background: #272829;
+    --color: #FFFFFF;
+    --border-color: #272829;
+  }
+  
+  ion-grid {
+    margin-top: -20px;
+  }
+
+ion-col ion-button {
+  --border-radius: 0px;
+}
+
+  

@@ -1,0 +1,82 @@
+<ion-content [fullscreen]="true">
+  <ion-content class="ion-padding">
+    <div class="flex-container">
+        <h1>Welcome Siraj,</h1>
+        <p>What are your plans tonight?</p>
+    </div>
+    <div class="for-you">
+      <h2>Popular Room</h2>
+      <div class="image-container">
+        <img  src="../../assets/img/date.jpg" alt="">
+        <div class="image-text">
+          <h3>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <br>
+            Date Room
+            <br>
+            <span>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, dicta.
+            </span>
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="facility">
+      <h2>Facility</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="image-container">
+              <img src="../../assets/img/gym.jpg" alt="">
+            </div>
+            <div class="centered">GYM</div>
+          </ion-col>
+          <ion-col>
+            <div class="image-container">
+              <img src="../../assets/img/pool.jpg" alt="">
+            </div>
+            <div class="centered">POOL</div>
+          </ion-col>
+          <ion-col>
+            <div class="image-container">
+              <img src="../../assets/img/bar.jpg" alt="">
+            </div>
+            <div class="centered">BAR</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="rooms">
+      <div class="rooms">
+        <h2>Other Rooms</h2>
+        <ion-list lines="none">
+          <ion-item *ngFor="let room of rooms" (click)="openModal(room)">
+            <ion-thumbnail slot="start">
+              <img [src]="room.image" alt="Room Image" />
+            </ion-thumbnail>
+            <ion-label>
+              <ion-icon *ngFor="let rating of room.rating" [name]="rating > 0 ? 'star' : 'star-outline'"></ion-icon>
+              <h3>{{ room.name }}</h3>
+              <p>{{ room.desc }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+      
+
+    </div>
+  </ion-content>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+      <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

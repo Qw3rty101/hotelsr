@@ -1,0 +1,143 @@
+<!-- ordermodal.component.html -->
+<!-- <ion-header class="top-header">
+  <ion-toolbar>
+    <ion-title></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Back</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <ion-title>$<span>40</span>/Night</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="order()">Order</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+    <ion-button (click)="dismissModal()" color="dark" class="corner-button">
+      <ion-icon name="arrow-back-outline" color="light"></ion-icon>
+    </ion-button>
+    <img [src]="room.image" alt="Room Image" class="room-image" />
+  </div>
+
+  <ion-card color="" class="card-title">
+    <ion-card-content>
+      <div class="container-room">
+        <h2>{{ room.name }}</h2>
+        <div class="price-container">
+          <h3>$<span>40</span>/Night</h3>
+        </div>
+      </div>
+      <p>Karawang, Jawa Barat</p>
+      <ion-icon class="star" *ngFor="let rating of room.rating" [name]="rating > 0 ? 'star' : 'star-outline'"></ion-icon>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="details">
+    <h2>Details</h2>
+    <p>{{ room.description }}</p>
+
+    <h2>Facility</h2>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>
+          <ion-icon name="tv-outline" size="large"></ion-icon>
+        </ion-label>
+        <h6>Netflix</h6>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="wifi-outline" size="large"></ion-icon>
+        </ion-label>
+        <h6>Free WiFi</h6>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-add-outline" size="large"></ion-icon>
+        </ion-label>
+        <h6>4 Adults</h6>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="booking">
+    <h2>Booking Schedule</h2>
+    <p class="note">
+      Jika dalam waktu tertentu anda tidak kunjung mengkonfirmasi ulang ke resepsionis, sistem kami akan menganggap order anda hangus.
+    </p>
+
+    <ion-card color="" class="card-date-order">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1"></ion-col>
+            <ion-col>
+              <p><b>Check-In</b></p>
+            </ion-col>
+            <ion-col>
+              <p><b>Check-Out</b></p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="auto">
+              <ion-icon name="calendar-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col>
+              
+              <ion-datetime-button datetime="checkin" color="dark"></ion-datetime-button>
+    
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="checkin" presentation="date" [min]="minDate"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+            <ion-col>
+              
+              <ion-datetime-button datetime="checkout" color="dark"></ion-datetime-button>
+    
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="checkout" presentation="date" [min]="minDate"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="auto">
+              <ion-icon name="time-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <ion-datetime-button datetime="checkin-time" color="dark"></ion-datetime-button>
+    
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="checkin-time" presentation="time" [min]="minDate" hourCycle="h24"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+            <ion-col>
+              <ion-datetime-button datetime="checkout-time" color="dark"></ion-datetime-button>
+    
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="checkout-time" presentation="time" [min]="minDate" hourCycle="h24"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+  <br><br><br><br><br>
+</ion-content>

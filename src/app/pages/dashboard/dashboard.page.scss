@@ -1,0 +1,145 @@
+// primary color
+$black : #272829;
+$gray : #61677A;
+$white : #D8D9DA;
+$milk : #FFF6E0;
+
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #272829;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.flex-container {
+  display: inline;
+  align-items: baseline;
+}
+
+.flex-container h1 {
+  line-height: 1px; 
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+}
+
+h2 {
+  display: block; 
+  margin-bottom: 10px;
+  margin-top: 10%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: left;
+}
+
+.for-you .image-container {
+  position: relative;
+  width: 100%;
+}
+
+.for-you .image-container img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.for-you .image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 99%;
+  background: linear-gradient(to top, rgba(39, 40, 41, 0.8) 0%, transparent 100%);
+  border-radius: 10px;
+}
+
+.for-you .image-container .image-text h3 {
+  display: block;
+  position: absolute;
+  top: 70%;
+  left: 14%;
+  transform: translate(-10%, -50%);
+  z-index: 2;
+  color: #FFFFFF;
+  font-size: 24px;
+  text-align: left;
+}
+
+.for-you .image-container .image-text span {
+  font-size: 18px;
+  font-weight: lighter;
+  color: #FFFFFF;
+}
+
+.for-you .image-container .image-text ion-icon {
+  color: #FFC94A;
+}
+
+.facility img {
+  border-radius: 10px;
+  padding: 0px 5px;
+}
+
+.facility {
+  position: relative;
+  text-align: center;
+  display: block;
+}
+
+.image-container img {
+  filter: brightness(70%);
+}
+
+.facility .centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+
+ion-item {
+  margin-bottom: 10px;
+}
+
+ion-label {
+  margin: 0px 10px;
+}
+
+ion-label h3 {
+  font-size: 20px;
+  color: #272829;
+}
+
+ion-label p {
+  color: #272829;
+}
+
+.rooms ion-thumbnail img {
+  border-radius: 5px;
+}
+
+.rooms ion-thumbnail {
+  border-radius: 5px;
+  width: 120px;
+  height: 150px;
+}
+
+ion-label ion-icon {
+  color: #FFC94A;
+}
+
+    
