@@ -1,68 +1,72 @@
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <!-- Booking List -->
+  <ion-list *ngIf="bookings.length > 0">
     <ion-list-header>
-      <ion-label color="success">Check In</ion-label>
+      <ion-chip color="warning">Booking</ion-chip>
     </ion-list-header>
-    <ion-item>
+    <ion-item *ngFor="let order of bookings">
       <ion-label>
-        Private Room
-
+        {{ order.room }}
         <p>
           <ion-text>
-            Date : Friday, 18 January 2024
+            Date : {{ order.date }}
           </ion-text>
           <br>
           <ion-text>
-            Time : 08.15
+            Time : {{ order.time }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-button color="primary" fill="clear">Details</ion-button>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        Private Room
-
-        <p>
-          <ion-text>
-            Date : Friday, 20 January 2024
-          </ion-text>
-          <br>
-          <ion-text>
-            Time : 08.15
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-button color="primary" fill="clear">Details</ion-button>
+      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
     </ion-item>
   </ion-list>
 
-  <ion-list>
+  <!-- Check-in List -->
+  <ion-list *ngIf="checkIns.length > 0">
     <ion-list-header>
-      <ion-label color="danger">Check Out</ion-label>
+      <ion-chip color="success">Check-in</ion-chip>
     </ion-list-header>
-    <ion-item>
+    <ion-item *ngFor="let order of checkIns">
       <ion-label>
-        Date Room
-
+        {{ order.room }}
         <p>
           <ion-text>
-            Date : Friday, 16 January 2024
+            Date : {{ order.date }}
           </ion-text>
           <br>
           <ion-text>
-            Time : 21.15
+            Time : {{ order.time }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-button color="primary" fill="clear">Details</ion-button>
+      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="checkOuts.length > 0">
+    <ion-list-header>
+      <ion-chip color="danger">Check-out</ion-chip>
+    </ion-list-header>
+    <ion-item *ngFor="let order of checkOuts">
+      <ion-label>
+        {{ order.room }}
+        <p>
+          <ion-text>
+            Date : {{ order.date }}
+          </ion-text>
+          <br>
+          <ion-text>
+            Time : {{ order.time }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
 
-
 <ion-footer>
   <ion-toolbar>
-      <app-tabs></app-tabs>
+    <app-tabs></app-tabs>
   </ion-toolbar>
 </ion-footer>

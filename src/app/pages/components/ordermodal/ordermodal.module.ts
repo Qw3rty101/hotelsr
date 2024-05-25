@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {OrdermodalComponent} from './ordermodal.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -9,7 +10,8 @@ import {OrdermodalComponent} from './ordermodal.component';
   declarations: [OrdermodalComponent],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    FormsModule
   ],
   exports: [OrdermodalComponent],
 })

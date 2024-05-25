@@ -10,6 +10,8 @@ import { OrderPage } from './order.page';
 
 import { TabsModule } from '../components/tabs/tabs.module';
 
+import { CompleteOrderModule } from '../components/completeorder/completeorder.module';
+
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import { TabsModule } from '../components/tabs/tabs.module';
     FormsModule,
     IonicModule,
     OrderPageRoutingModule,
-    TabsModule
+    TabsModule,
+    CompleteOrderModule
   ],
   declarations: [OrderPage]
 })

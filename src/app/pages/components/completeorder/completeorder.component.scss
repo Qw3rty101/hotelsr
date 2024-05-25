@@ -1,0 +1,12 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.corner-button {
+    color: #FFFFFF;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1; /* Pastikan tombol ada di atas gambar */
+}
