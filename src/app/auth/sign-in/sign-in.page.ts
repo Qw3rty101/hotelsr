@@ -65,6 +65,9 @@ export class SignInPage implements OnInit {
       
       localStorage.setItem('isLoggedIn', 'true');
       this.router.navigate(['/dashboard']);
+    } else if(this.email === 'admin@employe.com' && this.password === 'admin') {
+      localStorage.setItem('isLoggedIn', 'true');
+      this.router.navigate(['/room']);
     } else {
       console.error('Email atau password salah!');
     }

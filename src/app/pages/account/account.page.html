@@ -1,0 +1,36 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="" size="default" fill="outline">
+          <ion-icon name="id-card-outline"></ion-icon>
+          Profile
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" color="success" size="default" fill="outline">
+          <ion-icon name="card-outline"></ion-icon>
+          Payment
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="danger" size="default" fill="outline" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Log Out
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+      <app-tabs></app-tabs>
+  </ion-toolbar>
+</ion-footer>

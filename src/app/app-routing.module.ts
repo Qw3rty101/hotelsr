@@ -25,6 +25,18 @@ const routes: Routes = [
     path: 'order',
     loadChildren: () => import('./pages/order/order.module').then( m => m.OrderPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
+  },
+  {
+    path: 'room',
+    loadChildren: () => import('./admin/room/room.module').then( m => m.RoomPageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./admin/user/user.module').then( m => m.UserPageModule)
+  },
   
 ];
 

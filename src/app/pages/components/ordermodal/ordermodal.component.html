@@ -138,12 +138,11 @@
     
               <ion-modal [keepContentsMounted]="true">
                 <ng-template>
-                  <ion-datetime 
+                  <ion-datetime
                     id="checkin-time" 
                     presentation="time" 
-                    hourCycle="h12" 
-                    (ionChange)="handleCheckInTimeChange($event)"
-                    [value]="minTime">
+                    hourCycle="h24" 
+                    (ionChange)="handleCheckInTimeChange($event)">
                   </ion-datetime>
                 </ng-template>
               </ion-modal>

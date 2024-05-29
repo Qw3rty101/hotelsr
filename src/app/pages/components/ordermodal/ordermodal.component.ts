@@ -1,5 +1,5 @@
-import { ModalController } from '@ionic/angular';
-import { Component, Input, OnInit } from '@angular/core';
+import { IonDatetime, ModalController } from '@ionic/angular';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';  
 
@@ -15,6 +15,8 @@ export class OrdermodalComponent implements OnInit {
   minDate: string = new Date().toISOString();
   maxDate: string = new Date().toISOString();
 
+  // @ViewChild('datetime', {static : false}) datetime!: IonDatetime;
+
   checkInDate: string = '';
   checkOutDate: string = '';
   checkInTime: string = '';
@@ -23,13 +25,14 @@ export class OrdermodalComponent implements OnInit {
 
   constructor(private modalController: ModalController, private router: Router, private orderService: OrderService) {
 
-    const currentDateTime = new Date();
     const today = new Date();
     const tomorrow = new Date(today);
 
+    // today.setDate(today.getDate() + 1);
     tomorrow.setDate(tomorrow.getDate() + 1);
     
-    this.minTime = currentDateTime.toISOString().substring(0, 10);
+    // this.minTime = currentDateTime.toISOString().substring(0, 10);
+    this.minTime = today.toISOString();
     this.checkInDate = today.toISOString().substring(0, 10);
     this.checkOutDate = tomorrow.toISOString().substring(0, 10);
   }
@@ -45,12 +48,18 @@ export class OrdermodalComponent implements OnInit {
     this.minDate = tomorrow.toISOString();
   }
 
+  // updatedTime() {
+  //   const now = new Date()
+  //   this.minTime = now.toLocaleString()
+  // }
+
   order() {
-    
-    console.log('Check-In Date:', this.checkInDate);
-    console.log('Check-Out Date:', this.checkOutDate);
-    console.log('Check-In Time:', this.checkInTime);
-    console.log('Check-Out Time:', this.checkInTime);
+
+    // const selectedDate = this.datetime.value as string | null;
+    // if(selectedDate) {
+    //   this.minTime = new Date(selectedDate).toLocaleString();
+    // }
+    // console.log(this.minTime)
 
     const newOrder = {
       id: this.orderService.getOrders().length,
@@ -58,7 +67,7 @@ export class OrdermodalComponent implements OnInit {
       room: this.room.name,
       date: this.checkInDate ? new Date(this.checkInDate).toLocaleDateString() : '',
       dateOut: this.checkOutDate ? new Date(this.checkOutDate).toLocaleDateString() : '',
-      time: this.checkInTime ? new Date(this.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
+      time: this.minTime ? new Date(this.minTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
     };
     this.orderService.addOrder(newOrder);
     this.modalController.dismiss();
