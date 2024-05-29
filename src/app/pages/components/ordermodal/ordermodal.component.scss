@@ -122,7 +122,11 @@ span {
 
 ion-col {
     // margin-left: 20px;
-    text-align: center;
+    text-align: left;
+}
+
+ion-datetime-button {
+    float: right;
 }
 
 ion-datetime {

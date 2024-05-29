@@ -11,7 +11,9 @@ import { OrderService } from '../../services/order.service';
 export class OrdermodalComponent implements OnInit {
 
   @Input() room: any;
+  minTime: string;
   minDate: string = new Date().toISOString();
+  maxDate: string = new Date().toISOString();
 
   checkInDate: string = '';
   checkOutDate: string = '';
@@ -20,7 +22,16 @@ export class OrdermodalComponent implements OnInit {
   
 
   constructor(private modalController: ModalController, private router: Router, private orderService: OrderService) {
-    this.minDate = new Date().toISOString();
+
+    const currentDateTime = new Date();
+    const today = new Date();
+    const tomorrow = new Date(today);
+
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    this.minTime = currentDateTime.toISOString().substring(0, 10);
+    this.checkInDate = today.toISOString().substring(0, 10);
+    this.checkOutDate = tomorrow.toISOString().substring(0, 10);
   }
 
   ngOnInit() {
@@ -30,20 +41,23 @@ export class OrdermodalComponent implements OnInit {
   updateMinDateTime() {
     const currentDate = new Date();
     const tomorrow = new Date(currentDate);
-    tomorrow.setDate(currentDate.getDate() + 1);
+    tomorrow.setDate(currentDate.getDate());
     this.minDate = tomorrow.toISOString();
   }
 
   order() {
     
-    console.log('Check-In Date:', this.checkInDate); // Debugging log
-    console.log('Check-In Time:', this.checkInTime); // Debugging log
+    console.log('Check-In Date:', this.checkInDate);
+    console.log('Check-Out Date:', this.checkOutDate);
+    console.log('Check-In Time:', this.checkInTime);
+    console.log('Check-Out Time:', this.checkInTime);
 
     const newOrder = {
-      id: this.orderService.getOrders().length + 1,
+      id: this.orderService.getOrders().length,
       status: 'Booking',
       room: this.room.name,
       date: this.checkInDate ? new Date(this.checkInDate).toLocaleDateString() : '',
+      dateOut: this.checkOutDate ? new Date(this.checkOutDate).toLocaleDateString() : '',
       time: this.checkInTime ? new Date(this.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
     };
     this.orderService.addOrder(newOrder);
@@ -58,6 +72,7 @@ export class OrdermodalComponent implements OnInit {
 
   handleCheckOutDateChange(event: any) {
     this.checkOutDate = event.detail.value || '';
+    console.log('Selected Check-Out Date:', this.checkOutDate);
   }
 
   handleCheckInTimeChange(event: any) {
@@ -67,6 +82,7 @@ export class OrdermodalComponent implements OnInit {
 
   handleCheckOutTimeChange(event: any) {
     this.checkOutTime = event.detail.value || '';
+    console.log('Selected Check-Out Time:', this.checkInTime);
   }
 
   dismissModal() {

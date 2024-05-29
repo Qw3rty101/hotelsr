@@ -10,8 +10,8 @@ import { CompleteorderComponent } from '../components/completeorder/completeorde
 })
 export class OrderPage implements OnInit {
   bookings: any[] = [];
-  checkIns: any[] = [];
-  checkOuts: any[] = [];
+  live: any[] = [];
+  expired: any[] = [];
 
   constructor(private modalController: ModalController, private orderService: OrderService) { }
 
@@ -26,8 +26,8 @@ export class OrderPage implements OnInit {
   updateOrders() {
     const orders = this.orderService.getOrders();
     this.bookings = orders.filter(order => order.status === 'Booking');
-    this.checkIns = orders.filter(order => order.status === 'Check-in');
-    this.checkOuts = orders.filter(order => order.status === 'Check-out');
+    this.live = orders.filter(order => order.status === 'Live');
+    this.expired = orders.filter(order => order.status === 'Expired');
   }
 
   async openModal() {
@@ -46,9 +46,9 @@ export class OrderPage implements OnInit {
     switch(type) {
       case 'Booking':
         return 'warning';
-      case 'Check-in':
+      case 'Live':
         return 'success';
-      case 'Check-out':
+      case 'Expired':
         return 'danger';
       default:
         return 'primary';

@@ -13,20 +13,34 @@
           </ion-text>
           <br>
           <ion-text>
-            Time : {{ order.time }}
+            Check in : {{ order.time }}
           </ion-text>
         </p>
       </ion-label>
       <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
     </ion-item>
   </ion-list>
+  <ng-container *ngIf="bookings.length === 0">
+    <ion-list-header>
+      <ion-chip color="warning">Booking</ion-chip>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>
+          <ion-text>
+            Tidak ada kamar yang di booking
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ng-container>
 
   <!-- Check-in List -->
-  <ion-list *ngIf="checkIns.length > 0">
+  <ion-list *ngIf="live.length > 0">
     <ion-list-header>
-      <ion-chip color="success">Check-in</ion-chip>
+      <ion-chip color="success">Live</ion-chip>
     </ion-list-header>
-    <ion-item *ngFor="let order of checkIns">
+    <ion-item *ngFor="let order of live">
       <ion-label>
         {{ order.room }}
         <p>
@@ -35,19 +49,34 @@
           </ion-text>
           <br>
           <ion-text>
-            Time : {{ order.time }}
+            Check out : {{ order.time }}
           </ion-text>
         </p>
       </ion-label>
       <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
     </ion-item>
   </ion-list>
+  <ng-container *ngIf="live.length === 0">
+    <ion-list-header>
+      <ion-chip color="success">Live</ion-chip>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>
+          <ion-text>
+            Tidak ada kamar yang sedang live
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ng-container>
 
-  <ion-list *ngIf="checkOuts.length > 0">
+  <!-- Check-out List -->
+  <ion-list *ngIf="expired.length > 0">
     <ion-list-header>
-      <ion-chip color="danger">Check-out</ion-chip>
+      <ion-chip color="danger">Expired</ion-chip>
     </ion-list-header>
-    <ion-item *ngFor="let order of checkOuts">
+    <ion-item *ngFor="let order of expired">
       <ion-label>
         {{ order.room }}
         <p>
@@ -56,13 +85,27 @@
           </ion-text>
           <br>
           <ion-text>
-            Time : {{ order.time }}
+            Last check : {{ order.time }}
           </ion-text>
         </p>
       </ion-label>
       <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
     </ion-item>
   </ion-list>
+  <ng-container *ngIf="expired.length === 0">
+    <ion-list-header>
+      <ion-chip color="danger">Expired</ion-chip>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <p>
+          <ion-text>
+            Tidak ada kamar yang expired
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ng-container>
 </ion-content>
 
 <ion-footer>
