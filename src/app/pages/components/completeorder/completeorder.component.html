@@ -16,13 +16,30 @@
     </ion-button>
   </div>
 
-  <ion-card color="dark">
+  <ion-card color="">
     <ion-card-header>
-      <ion-card-title>Details Order</ion-card-title>
-      <ion-card-subtitle>{{ order?.room }}</ion-card-subtitle>
+      <ion-card-title>{{ order?.room }}</ion-card-title>
+      <ion-card-subtitle>Details</ion-card-subtitle>
     </ion-card-header>
   
-    <ion-card-content> Card Content </ion-card-content>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>{{ order?.date }}</ion-label>
+        <ion-note slot="end">Check in</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ order?.dateOut }}</ion-label>
+        <ion-note slot="end">Check out</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ order?.time }}</ion-label>
+        <ion-note slot="end">Time</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Rp<span>{{ order?.price }}</span></ion-label>
+        <ion-note slot="end">Total Price</ion-note>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
 
 

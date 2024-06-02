@@ -33,6 +33,7 @@ export class OrdermodalComponent implements OnInit {
     
     // this.minTime = currentDateTime.toISOString().substring(0, 10);
     this.minTime = today.toISOString();
+    this.checkInTime = today.toISOString();
     this.checkInDate = today.toISOString().substring(0, 10);
     this.checkOutDate = tomorrow.toISOString().substring(0, 10);
   }
@@ -65,9 +66,10 @@ export class OrdermodalComponent implements OnInit {
       id: this.orderService.getOrders().length,
       status: 'Booking',
       room: this.room.name,
+      price: this.room.price,
       date: this.checkInDate ? new Date(this.checkInDate).toLocaleDateString() : '',
       dateOut: this.checkOutDate ? new Date(this.checkOutDate).toLocaleDateString() : '',
-      time: this.minTime ? new Date(this.minTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
+      time: this.checkInTime ? new Date(this.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
     };
     console.log(newOrder);
     this.orderService.addOrder(newOrder);
