@@ -12,6 +12,7 @@ import { roomsData } from '../room.data';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  public loaded = false;
 
   rooms = roomsData;
 

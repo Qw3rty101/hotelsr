@@ -1,6 +1,6 @@
 <ion-header class="custom-header">
   <ion-toolbar>
-    <ion-title>$<span>40</span>/Night</ion-title>
+    <ion-title>Rp<span>{{ room.price }}</span>/Night</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="order()">Order</ion-button>
     </ion-buttons>
@@ -21,7 +21,7 @@
       <div class="container-room">
         <h2>{{ room.name }}</h2>
         <div class="price-container">
-          <h3>$<span>40</span>/Night</h3>
+          <h3>Rp<span>{{ room.price }}</span></h3>
         </div>
       </div>
       <p>Karawang, Jawa Barat</p>
@@ -48,10 +48,35 @@
         <h6>Free WiFi</h6>
       </ion-item>
       <ion-item>
+        <ion-text>
+          <h5>Optional</h5>
+        </ion-text>
+      </ion-item>
+      <ion-item>
         <ion-label>
-          <ion-icon name="person-add-outline" size="large"></ion-icon>
+          <ion-icon name="add-circle-outline" size="large"></ion-icon>
         </ion-label>
-        <h6>4 Adults</h6>
+        <ion-list>
+          <ion-item>
+            <ion-select aria-label="bed" placeholder="Bed">
+              <ion-select-option value="single">Single Bed</ion-select-option>
+              <ion-select-option value="double">Double Bed</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="add-circle-outline" size="large"></ion-icon>
+        </ion-label>
+        <ion-list>
+          <ion-item>
+            <ion-select aria-label="room" placeholder="Room">
+              <ion-select-option value="smoking">Smoking Room</ion-select-option>
+              <ion-select-option value="nosmoke">No Smoking Room</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
       </ion-item>
     </ion-list>
   </div>

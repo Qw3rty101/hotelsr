@@ -17,7 +17,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
+      <ion-button color="primary" fill="clear" (click)="openModal(order)">Details</ion-button>
     </ion-item>
   </ion-list>
   <ng-container *ngIf="bookings.length === 0">
@@ -53,7 +53,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
+      <ion-button color="primary" fill="clear" (click)="openModal(order)">Details</ion-button>
     </ion-item>
   </ion-list>
   <ng-container *ngIf="live.length === 0">
@@ -89,7 +89,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-button color="primary" fill="clear" (click)="openModal()">Details</ion-button>
+      <ion-button color="primary" fill="clear" (click)="openModal(order)">Details</ion-button>
     </ion-item>
   </ion-list>
   <ng-container *ngIf="expired.length === 0">

@@ -29,7 +29,7 @@ export class OrdermodalComponent implements OnInit {
     const tomorrow = new Date(today);
 
     // today.setDate(today.getDate() + 1);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 2);
     
     // this.minTime = currentDateTime.toISOString().substring(0, 10);
     this.minTime = today.toISOString();
@@ -69,6 +69,7 @@ export class OrdermodalComponent implements OnInit {
       dateOut: this.checkOutDate ? new Date(this.checkOutDate).toLocaleDateString() : '',
       time: this.minTime ? new Date(this.minTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
     };
+    console.log(newOrder);
     this.orderService.addOrder(newOrder);
     this.modalController.dismiss();
     this.router.navigate(['./order']);

@@ -3,15 +3,23 @@ import { ModalController } from '@ionic/angular';
 import { OrderService } from '../services/order.service'; // Import the service
 import { CompleteorderComponent } from '../components/completeorder/completeorder.component';
 
+interface Order {
+  id: number;
+  status: string;
+  room: string;
+  date: string;
+  time: string;
+}
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.page.html',
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
-  bookings: any[] = [];
-  live: any[] = [];
-  expired: any[] = [];
+  bookings: Order[] = [];
+  live: Order[] = [];
+  expired: Order[] = [];
 
   constructor(private modalController: ModalController, private orderService: OrderService) { }
 
@@ -30,9 +38,10 @@ export class OrderPage implements OnInit {
     this.expired = orders.filter(order => order.status === 'Expired');
   }
 
-  async openModal() {
+  async openModal(order: Order) {
     const modal = await this.modalController.create({
-      component: CompleteorderComponent
+      component: CompleteorderComponent,
+      componentProps: { order: order }
     });
 
     modal.onDidDismiss().then(() => {
