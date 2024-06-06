@@ -16,33 +16,39 @@ export class SignInPage implements OnInit {
 
   async login() {
 
-//     fetch("https://jsonplaceholder.typicode.com/posts", { 
-      
-//     // Adding method type 
-//     method: "POST", 
-      
-//     // Adding body or contents to send 
-//     body: JSON.stringify({ 
-//         email: "user@mail.com", 
-//         password: "user", 
-//     }), 
-      
-//     // Adding headers to the request 
-//     headers: { 
-//         "Content-type": "application/json; charset=UTF-8",
-//     } 
-// }) 
-  
-// // Converting to JSON 
-// .then(response => response.json()) 
-  
-// // Displaying results to console 
-// .then(json => {
-//   const token = json.token;
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login", {
+          method: "POST",
+          body: JSON.stringify({
+              email: this.email,  // Perbaikan nama field
+              password: this.password,  // Perbaikan nama field
+          }),
+          headers: {
+              "Content-type": "application/json; charset=UTF-8",
+          },
+      });
 
-//   localStorage.setItem('token',token);
-//   this.router.navigate(['/dashboard']);
-// }); 
+      if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Error:', errorText);
+          alert('Login gagal: ' + errorText);
+          return;
+      }
+
+      const json = await response.json();
+      console.log(json);
+
+      if (json.access_token) {  // Pengecekan apakah login berhasil
+          const token = json.access_token;
+          localStorage.setItem('token', token);
+          this.router.navigate(['/dashboard']);
+      } else {
+          alert('Login gagal: ' + (json.message || 'Email atau password salah.'));
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      alert('Login gagal: Kesalahan jaringan atau server.');
+  }
 
 // axios.post('/login', {
 //   email: 'user@mail.com',
@@ -59,17 +65,17 @@ export class SignInPage implements OnInit {
 //   alert(error)
 // });
 
-    if (this.email === 'user@gmail.com' && this.password === 'user') {
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
+  //   if (this.email === 'user@gmail.com' && this.password === 'user') {
+  //     console.log('Email:', this.email);
+  //     console.log('Password:', this.password);
       
-      localStorage.setItem('isLoggedIn', 'true');
-      this.router.navigate(['/dashboard']);
-    } else if(this.email === 'admin@employe.com' && this.password === 'admin') {
-      localStorage.setItem('isLoggedIn', 'true');
-      this.router.navigate(['/room']);
-    } else {
-      console.error('Email atau password salah!');
-    }
+  //     localStorage.setItem('isLoggedIn', 'true');
+  //     this.router.navigate(['/dashboard']);
+  //   } else if(this.email === 'admin@employe.com' && this.password === 'admin') {
+  //     localStorage.setItem('isLoggedIn', 'true');
+  //     this.router.navigate(['/room']);
+  //   } else {
+  //     console.error('Email atau password salah!');
+  //   }
   }
 }

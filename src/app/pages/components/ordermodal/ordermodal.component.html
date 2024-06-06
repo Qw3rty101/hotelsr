@@ -13,13 +13,13 @@
     <ion-button (click)="dismissModal()" color="dark" class="corner-button">
       <ion-icon name="arrow-back-outline" color="light"></ion-icon>
     </ion-button>
-    <img [src]="room.image" alt="Room Image" class="room-image" />
+    <img [src]="room.img_path" alt="Room Image" class="room-image" />
   </div>
 
   <ion-card color="" class="card-title">
     <ion-card-content>
       <div class="container-room">
-        <h2>{{ room.name }}</h2>
+        <h2>{{ room.name_room }}</h2>
         <div class="price-container">
           <h3>Rp<span>{{ room.price }}</span></h3>
         </div>

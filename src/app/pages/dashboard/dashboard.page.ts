@@ -6,6 +6,8 @@ import { OrdermodalComponent } from '../components/ordermodal/ordermodal.compone
 
 import { roomsData } from '../room.data';
 
+import { RoomService } from '../services/room.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -13,13 +15,28 @@ import { roomsData } from '../room.data';
 })
 export class DashboardPage implements OnInit {
   public loaded = false;
+  public rooms: any[] = [];
 
-  rooms = roomsData;
+  // rooms = roomsData;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private roomService: RoomService) { }
 
   ngOnInit() {
+    this.fetchRooms();
   }
+  
+  fetchRooms() {
+    this.roomService.getRooms().subscribe((data: any) => {
+      this.rooms = data.map((room: any) => ({
+        ...room,
+        rating: JSON.parse(room.rating)
+      }));
+      this.loaded = true;
+    }, (error: any) => {
+      console.error('Error fetching rooms', error);
+    });
+  }
+  
   
   async openModal(roomData: any) {
     const modal = await this.modalController.create({

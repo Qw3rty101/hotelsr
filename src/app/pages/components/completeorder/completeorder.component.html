@@ -39,6 +39,10 @@
         <ion-label>Rp<span>{{ order?.price }}</span></ion-label>
         <ion-note slot="end">Total Price</ion-note>
       </ion-item>
+      <div class="complete-order">
+        <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
+      </div>
+      
     </ion-card-content>
   </ion-card>
 

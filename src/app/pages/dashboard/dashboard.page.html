@@ -52,7 +52,7 @@
       </ion-grid>
     </div>
 
-    <div class="rooms">
+    <!-- <div class="rooms">
       <div class="rooms">
         <h2>Other Rooms</h2>
         <ion-list lines="none">
@@ -68,8 +68,22 @@
           </ion-item>
         </ion-list>
       </div>
-      
+    </div> -->
 
+    <div class="rooms">
+      <h2>Other Rooms</h2>
+      <ion-list lines="none">
+        <ion-item *ngFor="let room of rooms" (click)="openModal(room)">
+          <ion-thumbnail slot="start">
+            <img [src]="room.img_path" alt="Room Image" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-icon *ngFor="let rating of room.rating" [name]="rating > 0 ? 'star' : 'star-outline'"></ion-icon>
+            <h3>{{ room.name_room }}</h3>
+            <p>{{ room.short_desc }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-content>
 </ion-content>
