@@ -18,32 +18,33 @@
 
   <ion-card color="">
     <ion-card-header>
-      <ion-card-title>{{ order?.room }}</ion-card-title>
+      <ion-card-title>{{ order?.room_name }}</ion-card-title>
       <ion-card-subtitle>Details</ion-card-subtitle>
     </ion-card-header>
   
     <ion-card-content>
-      <ion-item>
-        <ion-label>{{ order?.date }}</ion-label>
-        <ion-note slot="end">Check in</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ order?.dateOut }}</ion-label>
-        <ion-note slot="end">Check out</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ order?.time }}</ion-label>
-        <ion-note slot="end">Time</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>Rp<span>{{ order?.price }}</span></ion-label>
-        <ion-note slot="end">Total Price</ion-note>
-      </ion-item>
-      <div class="complete-order">
-        <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
-      </div>
-      
-    </ion-card-content>
+      <ion-list lines="inset">
+        <ion-item>
+          <ion-label>{{ order?.check_in }}</ion-label>
+          <ion-note slot="end">Check in</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{ order?.check_out }}</ion-label>
+          <ion-note slot="end">Check out</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{ order?.order_time }}</ion-label>
+          <ion-note slot="end">Time</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Rp<span>{{ order?.price_order }}</span></ion-label>
+          <ion-note slot="end">Total Price</ion-note>
+        </ion-item>
+      </ion-list>
+        <div class="complete-order">
+          <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
+        </div>
+      </ion-card-content>
   </ion-card>
 
 

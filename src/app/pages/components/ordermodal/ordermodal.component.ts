@@ -1,7 +1,9 @@
-import { IonDatetime, ModalController } from '@ionic/angular';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { OrderService } from '../../services/order.service';  
+import { OrderService } from '../../services/order.service';
+import { Order } from '../../interfaces/order';
+import { RoomService } from '../../services/room.service';
 
 @Component({
   selector: 'app-ordermodal',
@@ -9,29 +11,23 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./ordermodal.component.scss'],
 })
 export class OrdermodalComponent implements OnInit {
-
   @Input() room: any;
+
   minTime: string;
   minDate: string = new Date().toISOString();
   maxDate: string = new Date().toISOString();
-
-  // @ViewChild('datetime', {static : false}) datetime!: IonDatetime;
 
   checkInDate: string = '';
   checkOutDate: string = '';
   checkInTime: string = '';
   checkOutTime: string = '';
-  
 
   constructor(private modalController: ModalController, private router: Router, private orderService: OrderService) {
-
     const today = new Date();
     const tomorrow = new Date(today);
 
-    // today.setDate(today.getDate() + 1);
     tomorrow.setDate(tomorrow.getDate() + 2);
-    
-    // this.minTime = currentDateTime.toISOString().substring(0, 10);
+
     this.minTime = today.toISOString();
     this.checkInTime = today.toISOString();
     this.checkInDate = today.toISOString().substring(0, 10);
@@ -49,32 +45,30 @@ export class OrdermodalComponent implements OnInit {
     this.minDate = tomorrow.toISOString();
   }
 
-  // updatedTime() {
-  //   const now = new Date()
-  //   this.minTime = now.toLocaleString()
-  // }
-
   order() {
-
-    // const selectedDate = this.datetime.value as string | null;
-    // if(selectedDate) {
-    //   this.minTime = new Date(selectedDate).toLocaleString();
-    // }
-    // console.log(this.minTime)
-
-    const newOrder = {
-      id: this.orderService.getOrders().length,
-      status: 'Booking',
-      room: this.room.name,
-      price: this.room.price,
-      date: this.checkInDate ? new Date(this.checkInDate).toLocaleDateString() : '',
-      dateOut: this.checkOutDate ? new Date(this.checkOutDate).toLocaleDateString() : '',
-      time: this.checkInTime ? new Date(this.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
+    const newOrder: Order = {
+      id: 1, // id akan di-generate oleh backend
+      id_room: this.room.id_room,
+      id_facility: 1, // Gantilah sesuai dengan data yang Anda miliki
+      price_order: this.room.price,
+      check_in: this.checkInDate,
+      check_out: this.checkOutDate,
+      order_time: this.checkInTime.substring(11, 19),
+      status_order: 'Booking',
+      room: this.room
+      
     };
-    console.log(newOrder);
-    this.orderService.addOrder(newOrder);
-    this.modalController.dismiss();
-    this.router.navigate(['./order']);
+
+    this.orderService.addOrder(newOrder).subscribe(response => {
+      console.log('Order response:', response);
+      this.modalController.dismiss();
+      this.router.navigate(['./order']);
+    }, error => {
+      console.error('Order error:', error);
+      if (error.status === 422) {
+        console.error('Validation errors:', error.error);
+      }
+    });
   }
 
   handleCheckInDateChange(event: any) {

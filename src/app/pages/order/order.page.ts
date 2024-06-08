@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { OrderService } from '../services/order.service'; // Import the service
 import { CompleteorderComponent } from '../components/completeorder/completeorder.component';
-
-interface Order {
-  id: number;
-  status: string;
-  room: string;
-  date: string;
-  time: string;
-}
+import { Order } from '../interfaces/order';
+import { map, switchMap  } from 'rxjs/operators';
+import { OrderService } from '../services/order.service';
+import { RoomService } from '../services/room.service';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-order',
@@ -17,11 +13,12 @@ interface Order {
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
+
   bookings: Order[] = [];
   live: Order[] = [];
   expired: Order[] = [];
 
-  constructor(private modalController: ModalController, private orderService: OrderService) { }
+  constructor(private modalController: ModalController, private orderService: OrderService, private roomService: RoomService) { }
 
   ngOnInit() {
     this.updateOrders();
@@ -32,10 +29,27 @@ export class OrderPage implements OnInit {
   }
 
   updateOrders() {
-    const orders = this.orderService.getOrders();
-    this.bookings = orders.filter(order => order.status === 'Booking');
-    this.live = orders.filter(order => order.status === 'Live');
-    this.expired = orders.filter(order => order.status === 'Expired');
+    // this.orderService.getOrders().pipe(
+    //   switchMap((orders: Order[]) => {
+    //     const roomRequests: Observable<Order>[] = orders.map(order =>
+    //       this.roomService.getRoomById(order.id_room).pipe(
+    //         map(room => ({ ...order, roomName: room.name_room }))
+    //       )
+    //     );
+    //     return forkJoin(roomRequests);
+    //   })
+    // ).subscribe((ordersWithRoomNames: Order[]) => {
+    //   this.bookings = ordersWithRoomNames.filter(order => order.status_order === 'Booking');
+    //   this.live = ordersWithRoomNames.filter(order => order.status_order === 'Live');
+    //   this.expired = ordersWithRoomNames.filter(order => order.status_order === 'Expired');
+    // });
+    this.orderService.getOrders().pipe(
+      map((orders: Order[]) => {
+        this.bookings = orders.filter(order => order.status_order === 'Booking');
+        this.live = orders.filter(order => order.status_order === 'Live');
+        this.expired = orders.filter(order => order.status_order === 'Expired');
+      })
+    ).subscribe();
   }
 
   async openModal(order: Order) {

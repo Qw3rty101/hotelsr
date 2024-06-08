@@ -1,33 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ordersData } from '../order.data';
-
-interface Order {
-  id: number;
-  status: string;
-  room: string;
-  date: string;
-  time: string;
-}
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Order } from '../interfaces/order';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private orders: Order[] = ordersData;
+  private apiUrl = 'http://127.0.0.1:8000/api/order';
 
-  getOrders(): Order[] {
-    return this.orders;
+  constructor(private http: HttpClient) { }
+
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.apiUrl);
   }
 
-  addOrder(order: Order) {
-    this.orders.push(order);
-  }
-
-  getOrderById(id: number): Order | undefined {
-    return this.orders.find(order => order.id === id);
-  }
-
-  getOrdersByStatus(status: string): Order[] {
-    return this.orders.filter(order => order.status === status);
+  addOrder(orderData: Order): Observable<Order> {
+    return this.http.post<Order>(this.apiUrl, orderData);
   }
 }
