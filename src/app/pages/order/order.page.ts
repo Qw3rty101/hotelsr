@@ -22,6 +22,7 @@ export class OrderPage implements OnInit {
 
   ngOnInit() {
     this.updateOrders();
+
   }
 
   ionViewWillEnter() {
@@ -29,20 +30,6 @@ export class OrderPage implements OnInit {
   }
 
   updateOrders() {
-    // this.orderService.getOrders().pipe(
-    //   switchMap((orders: Order[]) => {
-    //     const roomRequests: Observable<Order>[] = orders.map(order =>
-    //       this.roomService.getRoomById(order.id_room).pipe(
-    //         map(room => ({ ...order, roomName: room.name_room }))
-    //       )
-    //     );
-    //     return forkJoin(roomRequests);
-    //   })
-    // ).subscribe((ordersWithRoomNames: Order[]) => {
-    //   this.bookings = ordersWithRoomNames.filter(order => order.status_order === 'Booking');
-    //   this.live = ordersWithRoomNames.filter(order => order.status_order === 'Live');
-    //   this.expired = ordersWithRoomNames.filter(order => order.status_order === 'Expired');
-    // });
     this.orderService.getOrders().pipe(
       map((orders: Order[]) => {
         this.bookings = orders.filter(order => order.status_order === 'Booking');
@@ -63,6 +50,19 @@ export class OrderPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  getRoomName(id_room: number): string {
+    switch (id_room) {
+      case 1:
+        return 'Raffel Room';
+      case 2:
+        return 'Cupid Room';
+      case 3:
+        return 'Meeting Room';
+      default:
+        return 'Unknown Room';
+    }
   }
 
   getChipColor(type: string): string {

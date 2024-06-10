@@ -18,7 +18,7 @@
 
   <ion-card color="">
     <ion-card-header>
-      <ion-card-title>{{ order?.room_name }}</ion-card-title>
+      <ion-card-title>{{ getRoomName(order.id_room) }}</ion-card-title>
       <ion-card-subtitle>Details</ion-card-subtitle>
     </ion-card-header>
   
@@ -36,14 +36,13 @@
           <ion-label>{{ order?.order_time }}</ion-label>
           <ion-note slot="end">Time</ion-note>
         </ion-item>
-        <ion-item>
-          <ion-label>Rp<span>{{ order?.price_order }}</span></ion-label>
+        <ion-item lines="none">
+          <ion-label><span>{{ order?.price_order }}</span></ion-label>
           <ion-note slot="end">Total Price</ion-note>
         </ion-item>
       </ion-list>
-        <div class="complete-order">
-          <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
-        </div>
+      <ion-button expand="block" color="dark">Pay</ion-button>
+      <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Cancel</ion-button>
       </ion-card-content>
   </ion-card>
 

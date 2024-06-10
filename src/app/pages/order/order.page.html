@@ -6,7 +6,7 @@
     </ion-list-header>
     <ion-item *ngFor="let order of bookings">
       <ion-label>
-        {{ order.room }}
+        {{ getRoomName(order.id_room) }}
         <p>
           <ion-text>
             Date : {{ order.check_in }}
@@ -42,7 +42,7 @@
     </ion-list-header>
     <ion-item *ngFor="let order of live">
       <ion-label>
-        {{ order.room }}
+        {{ getRoomName(order.id_room) }}
         <p>
           <ion-text>
             Date : {{ order.check_out }}
@@ -78,7 +78,7 @@
     </ion-list-header>
     <ion-item *ngFor="let order of expired">
       <ion-label>
-        {{ order.room }}
+        {{ getRoomName(order.id_room) }}
         <p>
           <ion-text>
             Date : {{ order.check_out }}

@@ -35,6 +35,15 @@ export class OrdermodalComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.room && typeof this.room.price === 'number') {
+      this.room.price = new Intl.NumberFormat("id", {
+          style: "currency",
+          currency: "IDR",
+          maximumFractionDigits: 0
+        }).format(this.room.price);
+    } else {
+      console.error('this.room or this.room.price is not defined or not a number');
+    }
     this.updateMinDateTime();
   }
 
@@ -46,11 +55,15 @@ export class OrdermodalComponent implements OnInit {
   }
 
   order() {
+    if (!this.room || typeof this.room.price !== 'string') {
+      console.error('this.room or this.room.price is not defined or not a formatted string');
+      return;
+    }
     const newOrder: Order = {
-      id: 1, // id akan di-generate oleh backend
+      id: 1,
       id_room: this.room.id_room,
-      id_facility: 1, // Gantilah sesuai dengan data yang Anda miliki
-      price_order: this.room.price,
+      id_facility: 1,
+      price_order: parseInt(this.room.price.replace(/[^0-9]/g, ''), 10),
       check_in: this.checkInDate,
       check_out: this.checkOutDate,
       order_time: this.checkInTime.substring(11, 19),

@@ -18,4 +18,9 @@ export class OrderService {
   addOrder(orderData: Order): Observable<Order> {
     return this.http.post<Order>(this.apiUrl, orderData);
   }
+
+  destroy(orderId: number): Observable<void> {
+    // Menggunakan metode DELETE dan URL endpoint yang benar
+    return this.http.delete<void>(`${this.apiUrl}/${orderId}`);
+  }
 }

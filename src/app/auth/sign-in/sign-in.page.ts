@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/pages/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,45 +12,74 @@ export class SignInPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {}
 
   ngOnInit() {}
 
   async login() {
-
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
-          method: "POST",
-          body: JSON.stringify({
-              email: this.email,  // Perbaikan nama field
-              password: this.password,  // Perbaikan nama field
-          }),
-          headers: {
-              "Content-type": "application/json; charset=UTF-8",
-          },
+      this.authService.login(this.email, this.password).subscribe({
+        next: (response) => {
+          if (response.access_token) {
+            localStorage.setItem('token', response.access_token);
+            console.log('JWT Token:', response.access_token);
+            this.router.navigate(['/dashboard']);
+          } else {
+            alert('Login gagal: ' + (response.message || 'Email atau password salah.'));
+          }
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          alert('Login gagal: Kesalahan jaringan atau server.');
+        }
       });
-
-      if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Error:', errorText);
-          alert('Login gagal: ' + errorText);
-          return;
-      }
-
-      const json = await response.json();
-      console.log(json);
-
-      if (json.access_token) {  // Pengecekan apakah login berhasil
-          const token = json.access_token;
-          localStorage.setItem('token', token);
-          this.router.navigate(['/dashboard']);
-      } else {
-          alert('Login gagal: ' + (json.message || 'Email atau password salah.'));
-      }
-  } catch (error) {
+    } catch (error) {
       console.error('Error:', error);
       alert('Login gagal: Kesalahan jaringan atau server.');
-  }
+    }
+
+  //   try {
+  //     const response = await fetch("http://127.0.0.1:8000/api/login", {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //             email: this.email,  
+  //             password: this.password,  
+  //         }),
+  //         headers: {
+  //             "Content-type": "application/json; charset=UTF-8",
+  //         },
+  //     });
+
+  //     if (!response.ok) {
+  //         const errorText = await response.text();
+  //         console.error('Error:', errorText);
+  //         alert('Login gagal: ' + errorText);
+  //         return;
+  //     }
+
+  //     const json = await response.json();
+  //     console.log(json);
+
+  //     if (json.access_token) {  // Pengecekan apakah login berhasil
+  //         const token = json.access_token;
+  //         const loggedInEmail = this.email;
+
+  //         localStorage.setItem('loggedInEmail', loggedInEmail);
+
+  //         this.userService.getMe(loggedInEmail).subscribe(data => {
+  //           // Lakukan sesuatu dengan data jika diperlukan
+  //           console.log(data);
+  //         });
+
+  //         localStorage.setItem('token', token);
+  //         this.router.navigate(['/dashboard']);
+  //     } else {
+  //         alert('Login gagal: ' + (json.message || 'Email atau password salah.'));
+  //     }
+  // } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('Login gagal: Kesalahan jaringan atau server.');
+  // }
 
 // axios.post('/login', {
 //   email: 'user@mail.com',

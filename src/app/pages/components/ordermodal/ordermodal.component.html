@@ -1,6 +1,6 @@
 <ion-header class="custom-header">
   <ion-toolbar>
-    <ion-title>Rp<span>{{ room.price }}</span>/Night</ion-title>
+    <ion-title><span>{{ room.price }}</span>/Night</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="order()">Order</ion-button>
     </ion-buttons>
@@ -21,7 +21,7 @@
       <div class="container-room">
         <h2>{{ room.name_room }}</h2>
         <div class="price-container">
-          <h3>Rp<span>{{ room.price }}</span></h3>
+          <h3><span>{{ room.price }}</span></h3>
         </div>
       </div>
       <p>Karawang, Jawa Barat</p>
@@ -31,7 +31,7 @@
 
   <div class="details">
     <h2>Details</h2>
-    <p>{{ room.description }}</p>
+    <p>{{ room.detail_desc }}</p>
 
     <h2>Facility</h2>
     <ion-list lines="none">

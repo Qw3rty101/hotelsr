@@ -11,4 +11,5 @@ export interface Order {
     roomName?: string; // Tambahkan properti ini
     date?: string;
     time?: string;
+    room_name?: string;
 }
