@@ -1,12 +1,20 @@
 // orders.data.ts
 
 export interface Order {
+  id_order: number;
   id: number;
-  status: string;
-  room: string;
-  date: string;
-  time: string;
+  id_room: number;
+  id_facility: number;
+  price_order: number;
+  check_in: string;
+  check_out: string;
+  order_time: string;
+  status_order: string;
+  order_at: string;
+  created_at: string;
+  updated_at: string;
 }
+
 
 export const ordersData = [
     // {

@@ -13,7 +13,6 @@ import { OrderService } from '../../services/order.service';
 export class CompleteorderComponent  implements OnInit {
 
   @Input() order: any = {};
-  @Input() data?: string = 'https://www.instagram.com/';
   qrCodeUrl?: string;
 
   constructor(private modalController: ModalController, private router: Router, private orderService: OrderService) { }
@@ -36,7 +35,6 @@ export class CompleteorderComponent  implements OnInit {
     } else {
       console.error('this.order or this.order.price_order is not defined or not a number or string');
     }
-    this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${this.data}`;
   }
 
   cancel(orderId: number) {

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../interfaces/order';
 import { RoomService } from '../../services/room.service';
+import { UserService } from '../../services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ordermodal',
@@ -22,7 +24,13 @@ export class OrdermodalComponent implements OnInit {
   checkInTime: string = '';
   checkOutTime: string = '';
 
-  constructor(private modalController: ModalController, private router: Router, private orderService: OrderService) {
+  constructor(
+    private modalController: ModalController, 
+    private router: Router, 
+    private authService: AuthService, 
+    private orderService: OrderService, 
+    private userService: UserService) {
+
     const today = new Date();
     const tomorrow = new Date(today);
 
@@ -55,12 +63,15 @@ export class OrdermodalComponent implements OnInit {
   }
 
   order() {
+    let currentUser = this.authService.getCurrentUser();
+    currentUser = currentUser['id'];
+
     if (!this.room || typeof this.room.price !== 'string') {
       console.error('this.room or this.room.price is not defined or not a formatted string');
       return;
     }
     const newOrder: Order = {
-      id: 1,
+      id: currentUser,
       id_room: this.room.id_room,
       id_facility: 1,
       price_order: parseInt(this.room.price.replace(/[^0-9]/g, ''), 10),

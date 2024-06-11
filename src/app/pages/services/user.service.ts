@@ -1,4 +1,3 @@
-// user.services
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,8 +11,13 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getMe(email: string): Observable<User[]> {
+  getMe(id: number): Observable<User> {
+    const apiUrlWithId = `${this.apiUrl}/${id}`;
+    return this.http.get<User>(apiUrlWithId);
+  }
+
+  getUserByEmail(email: string): Observable<User> {
     const apiUrlWithEmail = `${this.apiUrl}/${email}`;
-    return this.http.get<User[]>(apiUrlWithEmail);
+    return this.http.get<User>(apiUrlWithEmail);
   }
 }

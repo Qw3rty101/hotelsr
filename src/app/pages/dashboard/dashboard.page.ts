@@ -6,7 +6,9 @@ import { OrdermodalComponent } from '../components/ordermodal/ordermodal.compone
 
 import { roomsData } from '../room.data';
 
+import { AuthService } from 'src/app/services/auth.service';
 import { RoomService } from '../services/room.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,14 +18,27 @@ import { RoomService } from '../services/room.service';
 export class DashboardPage implements OnInit {
   public loaded = false;
   public rooms: any[] = [];
+  public user: any;
 
   // rooms = roomsData;
 
-  constructor(private modalController: ModalController, private roomService: RoomService) { }
+  constructor(private modalController: ModalController, private roomService: RoomService, private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     this.fetchRooms();
+    this.getUserData();
   }
+
+  getUserData() {
+    const currentUser = this.authService.getCurrentUser();
+    // console.log('Current user:', currentUser);
+  
+    if (currentUser) {
+      this.user = currentUser;
+      // console.log('User data:', this.user);
+    }
+  }
+  
   
   fetchRooms() {
     this.roomService.getRooms().subscribe((data: any) => {

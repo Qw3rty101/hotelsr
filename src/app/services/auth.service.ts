@@ -1,9 +1,8 @@
-// ../app/services/auth.service.ts
+// auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { UserService } from '../pages/services/user.service';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,24 +17,34 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { email, password }).pipe(
-      tap(response => {
-        if (response.access_token) {
-          // Simpan informasi pengguna di BehaviorSubject
-          const user = {
-            email,
-            name: response.name, // pastikan API mengirim nama pengguna
-            token: response.access_token
-          };
-          this.currentUserSubject.next(user);
-        }
-      })
-    );
-  }
-  
-
   getCurrentUser(): any {
     return this.currentUserSubject.value;
+  }
+
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { email, password }).pipe(
+      map(response => {
+        if (response.access_token && response.session_id) {
+          // Simpan session ID
+          sessionStorage.setItem('session_id', response.session_id);
+
+          // Simpan informasi pengguna
+          const userData = {
+            id: response.user.id,
+            email: response.user.email,
+            name: response.user.name,
+            token: response.access_token
+          };
+          this.currentUserSubject.next(userData);
+
+          return userData;
+        } else {
+          throw new Error('Login failed');
+        }
+      }),
+      tap(user => {
+        localStorage.setItem('token', user.token);
+      })
+    );
   }
 }

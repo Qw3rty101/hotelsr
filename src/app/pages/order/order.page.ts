@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CompleteorderComponent } from '../components/completeorder/completeorder.component';
 import { Order } from '../interfaces/order';
-import { map, switchMap  } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { OrderService } from '../services/order.service';
 import { RoomService } from '../services/room.service';
-import { forkJoin, Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-order',
@@ -14,24 +15,50 @@ import { forkJoin, Observable } from 'rxjs';
 })
 export class OrderPage implements OnInit {
 
+  public user: any;
   bookings: Order[] = [];
   live: Order[] = [];
   expired: Order[] = [];
 
-  constructor(private modalController: ModalController, private orderService: OrderService, private roomService: RoomService) { }
+  constructor(
+    private modalController: ModalController, 
+    private orderService: OrderService, 
+    private roomService: RoomService, 
+    private userService: UserService, 
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
-    this.updateOrders();
+    this.getUserData();
+  }
 
+  getUserData() {
+    const currentUser = this.authService.getCurrentUser();
+    console.log('Current user:', currentUser);
+
+    if (currentUser) {
+      this.user = currentUser;
+      console.log('User data:', this.user);
+      console.log('User id:', this.user.id);
+      this.updateOrders();
+    }
   }
 
   ionViewWillEnter() {
-    this.updateOrders();
+    if (this.user) {
+      this.updateOrders();
+    }
   }
 
   updateOrders() {
-    this.orderService.getOrders().pipe(
-      map((orders: Order[]) => {
+    if (!this.user || !this.user.id) {
+      console.error('User ID is undefined');
+      return;
+    }
+
+    this.orderService.getOrders(this.user.id).pipe(
+      map((response: { orders: Order[] }) => {
+        const orders = response.orders;
         this.bookings = orders.filter(order => order.status_order === 'Booking');
         this.live = orders.filter(order => order.status_order === 'Live');
         this.expired = orders.filter(order => order.status_order === 'Expired');
