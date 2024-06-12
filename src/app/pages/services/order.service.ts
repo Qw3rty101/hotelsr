@@ -11,7 +11,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getOrders(userId: number): Observable<any> { // Mengubah tipe kembali ke 'any' untuk mencocokkan respons API
+  getOrders(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${userId}`);
   }
 
@@ -20,8 +20,8 @@ export class OrderService {
   }
 
   checkOrder(orderId: number): Observable<Order> {
-    return this.http.post<Order>(`${this.apiUrl}/checkStatus`, { orderId });
-  }
+    return this.http.post<Order>(`${this.apiUrl}/checkStatus/${orderId}`, {});
+  }  
 
   destroy(orderId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${orderId}`);

@@ -55,32 +55,34 @@ export class OrderPage implements OnInit {
       console.error('User ID is undefined');
       return;
     }
-
+  
     this.orderService.getOrders(this.user.id).pipe(
       map((response: { orders: Order[] }) => {
         const orders = response.orders;
         this.bookings = orders.filter(order => order.status_order === 'Booking');
         this.live = orders.filter(order => order.status_order === 'Live');
         this.expired = orders.filter(order => order.status_order === 'Expired');
-
-        console.log(this.live[0].id_order)
-      if (Array.isArray(this.live[0].id_room)) {
-        // Lakukan iterasi pada setiap elemen dalam array this.live[0].id_room
-        this.live[0].id_room.forEach((liveOrder: any) => {
-          // Pastikan liveOrder adalah objek yang memiliki properti id_order
-          if (typeof liveOrder === 'object' && liveOrder.hasOwnProperty('id_order')) {
+  
+        this.live.forEach((liveOrder: any) => {
+          if (Array.isArray(liveOrder.id_order)) {
+            liveOrder.id_order.forEach((orderId: any) => {
+              if (typeof orderId === 'object' && orderId.hasOwnProperty('id_order')) {
+                this.orderService.checkOrder(orderId.id_order).subscribe((response) => {
+                  console.log(liveOrder.id_order);
+                });
+              }
+            });
+          } else {
             this.orderService.checkOrder(liveOrder.id_order).subscribe((response) => {
-              // Lakukan sesuatu dengan respons dari orderService.checkOrder()
-              console.log('Response from checkOrder:', response);
+              console.log(liveOrder.id_order);
             });
           }
         });
-      }
-
-        
       })
     ).subscribe();
   }
+  
+
 
   async openModal(order: Order) {
     const modal = await this.modalController.create({
