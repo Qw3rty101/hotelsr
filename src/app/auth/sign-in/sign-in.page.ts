@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
+import { LoadingController } from '@ionic/angular';
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.page.html',
@@ -12,7 +14,7 @@ export class SignInPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private loadingCtrl: LoadingController) {}
 
   ngOnInit() {}
 
@@ -31,6 +33,15 @@ export class SignInPage implements OnInit {
         alert('Login gagal: Email atau password salah.');
       }
     });
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 4000,
+    });
+
+    loading.present();
   }
   
 }

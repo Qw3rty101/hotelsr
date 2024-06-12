@@ -14,7 +14,9 @@ export class AccountPage implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['sign-in']);
+    setTimeout(() => {
+      this.router.navigate(['sign-in']);
+    }, 1000);
   }
 
 }

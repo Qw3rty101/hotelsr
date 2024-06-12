@@ -12,4 +12,5 @@ export interface Order {
     date?: string;
     time?: string;
     room_name?: string;
+    id_order?:number;
 }

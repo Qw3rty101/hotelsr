@@ -38,8 +38,8 @@ export class OrderPage implements OnInit {
 
     if (currentUser) {
       this.user = currentUser;
-      console.log('User data:', this.user);
-      console.log('User id:', this.user.id);
+      // console.log('User data:', this.user);
+      // console.log('User id:', this.user.id);
       this.updateOrders();
     }
   }
@@ -62,6 +62,22 @@ export class OrderPage implements OnInit {
         this.bookings = orders.filter(order => order.status_order === 'Booking');
         this.live = orders.filter(order => order.status_order === 'Live');
         this.expired = orders.filter(order => order.status_order === 'Expired');
+
+        console.log(this.live[0].id_order)
+      if (Array.isArray(this.live[0].id_room)) {
+        // Lakukan iterasi pada setiap elemen dalam array this.live[0].id_room
+        this.live[0].id_room.forEach((liveOrder: any) => {
+          // Pastikan liveOrder adalah objek yang memiliki properti id_order
+          if (typeof liveOrder === 'object' && liveOrder.hasOwnProperty('id_order')) {
+            this.orderService.checkOrder(liveOrder.id_order).subscribe((response) => {
+              // Lakukan sesuatu dengan respons dari orderService.checkOrder()
+              console.log('Response from checkOrder:', response);
+            });
+          }
+        });
+      }
+
+        
       })
     ).subscribe();
   }

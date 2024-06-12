@@ -19,6 +19,10 @@ export class OrderService {
     return this.http.post<Order>(this.apiUrl, orderData);
   }
 
+  checkOrder(orderId: number): Observable<Order> {
+    return this.http.post<Order>(`${this.apiUrl}/checkStatus`, { orderId });
+  }
+
   destroy(orderId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${orderId}`);
   }
