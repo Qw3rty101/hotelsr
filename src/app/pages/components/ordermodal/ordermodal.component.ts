@@ -23,6 +23,7 @@ export class OrdermodalComponent implements OnInit {
   checkOutDate: string = '';
   checkInTime: string = '';
   checkOutTime: string = '';
+  id: any;
 
   constructor(
     private modalController: ModalController, 
@@ -43,6 +44,16 @@ export class OrdermodalComponent implements OnInit {
   }
 
   ngOnInit() {
+    const dataString = localStorage.getItem('user_data');
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      this.id = userData.id;
+      console.log(this.id);
+    } else {
+      this.router.navigate(['/sign-in']);
+      return;
+    }
+    
     if (this.room && typeof this.room.price === 'number') {
       this.room.price = new Intl.NumberFormat("id", {
           style: "currency",
@@ -64,14 +75,20 @@ export class OrdermodalComponent implements OnInit {
 
   order() {
     let currentUser = this.authService.getCurrentUser();
-    currentUser = currentUser['id'];
+    currentUser = currentUser ? currentUser['id'] : null;
 
-    if (!this.room || typeof this.room.price !== 'string') {
-      console.error('this.room or this.room.price is not defined or not a formatted string');
+    if (!this.id) {
+      console.error('User ID is not defined.');
       return;
     }
+
+    if (!this.room || !this.room.id_room || typeof this.room.price !== 'string') {
+      console.error('Room details or price are not defined or not correctly formatted.');
+      return;
+    }
+
     const newOrder: Order = {
-      id: currentUser,
+      id: this.id,
       id_room: this.room.id_room,
       id_facility: 1,
       price_order: parseInt(this.room.price.replace(/[^0-9]/g, ''), 10),
@@ -80,7 +97,6 @@ export class OrdermodalComponent implements OnInit {
       order_time: this.checkInTime.substring(11, 19),
       status_order: 'Booking',
       room: this.room
-      
     };
 
     this.orderService.addOrder(newOrder).subscribe(response => {

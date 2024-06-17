@@ -1,7 +1,7 @@
 export interface Order {
     id: number;
     id_room: number;
-    id_facility: number;
+    id_facility?: number;
     price_order: number;
     check_in: string;
     check_out: string;

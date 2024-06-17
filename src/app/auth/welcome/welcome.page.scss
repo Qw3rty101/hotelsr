@@ -1,0 +1,38 @@
+$black : #272829;
+$gray : #61677A;
+$white : #D8D9DA;
+$milk : #FFF6E0;
+
+#container {
+    text-align: center;
+    width: 70%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50vh; /* Memposisikan container di tengah vertikal halaman */
+    transform: translateY(-50%);
+  }
+  
+#container strong {
+    font-size: 200%;
+    font-weight:lighter;
+    text-align: center;
+    display: block;
+    line-height: 40px;
+}
+
+#container p {
+    font-size: 100%;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+ion-button {
+margin-top: 10px;
+}
+
+ion-col ion-button {
+  --border-radius: 0px;
+}
+
+  

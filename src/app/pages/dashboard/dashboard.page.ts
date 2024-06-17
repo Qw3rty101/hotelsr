@@ -9,6 +9,7 @@ import { roomsData } from '../room.data';
 import { AuthService } from 'src/app/services/auth.service';
 import { RoomService } from '../services/room.service';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,11 +23,19 @@ export class DashboardPage implements OnInit {
 
   // rooms = roomsData;
 
-  constructor(private modalController: ModalController, private roomService: RoomService, private authService: AuthService, private userService: UserService) { }
+  constructor(private modalController: ModalController, private roomService: RoomService, private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.fetchRooms();
     this.getUserData();
+
+    const dataString = localStorage.getItem('user_data');
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      this.user = userData;
+    } else {
+      this.router.navigate(['/sign-in']);
+    }
   }
 
   getUserData() {

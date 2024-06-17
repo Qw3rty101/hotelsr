@@ -20,7 +20,21 @@ export class SignInPage implements OnInit {
     private toastController: ToastController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const dataString = localStorage.getItem('user_data');
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      if(userData.role === 'admin') {
+        this.router.navigate(['/room']);
+  
+      } else {
+        this.router.navigate(['/dashboard']);
+      }
+      console.log(userData.role);
+    } else {
+      console.error('Data pengguna tidak ditemukan di localStorage');
+    }
+  }
 
   async presentToast(message: string, position: 'top' | 'middle' | 'bottom' = 'bottom') {
     const toast = await this.toastController.create({
@@ -45,9 +59,16 @@ export class SignInPage implements OnInit {
         await loading.dismiss(); // Tutup loading setelah menerima respons
         if (response.token) {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('user_data', JSON.stringify(response.user));
+          localStorage.setItem('user_data', JSON.stringify(response));
           this.presentToast('Selamat Datang', 'top');
-          this.router.navigate(['/dashboard']);
+          
+          console.log(response.role)
+          if(response.role === 'admin') {
+            this.router.navigate(['/room']);
+
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         } else {
           this.errorMessage = response.message || 'Email atau password salah!';
           this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
@@ -59,5 +80,9 @@ export class SignInPage implements OnInit {
         this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
       }
     });
+  }
+
+  async google() {
+    this.authService.registerWithGoogle();
   }
 }

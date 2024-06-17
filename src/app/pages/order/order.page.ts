@@ -7,6 +7,7 @@ import { OrderService } from '../services/order.service';
 import { RoomService } from '../services/room.service';
 import { UserService } from '../services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -25,11 +26,19 @@ export class OrderPage implements OnInit {
     private orderService: OrderService, 
     private roomService: RoomService, 
     private userService: UserService, 
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.getUserData();
+    const dataString = localStorage.getItem('user_data');
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      this.user = userData;
+    } else {
+      this.router.navigate(['/sign-in']);
+    }
   }
 
   getUserData() {

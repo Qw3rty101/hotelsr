@@ -5,7 +5,7 @@ import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'sign-in',
+    redirectTo: 'welcome',
     pathMatch: 'full'
   },
   {
@@ -36,6 +36,14 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./admin/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./auth/welcome/welcome.module').then( m => m.WelcomePageModule)
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./auth/sign-up/sign-up.module').then( m => m.SignUpPageModule)
   },
   
 ];

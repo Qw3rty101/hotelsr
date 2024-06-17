@@ -10,21 +10,9 @@
     <ion-button class="login-btn" (click)="login()" expand="block" size="large" fill="outline" color="">Login</ion-button>
     <p>Or</p>
 
-    <ion-grid [fixed]="true">
-      <ion-row>
-        <ion-col>
-          <ion-button class="" expand="block" size="large" fill="outline" color="primary">
-            <ion-icon name="logo-google"></ion-icon>
-            
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button class="" expand="block" size="large" fill="outline" color="danger">
-            <ion-icon name="mail"></ion-icon>
-            
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-button class="" expand="block" size="large" fill="outline" color="primary" (click)="google()">
+      <ion-icon name="logo-google"></ion-icon>
+      
+    </ion-button>
   </div>
 </ion-content>

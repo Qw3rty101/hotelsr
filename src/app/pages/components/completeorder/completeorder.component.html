@@ -1,29 +1,18 @@
-<!-- ordermodal.component.html -->
-<!-- <ion-header class="top-header">
-  <ion-toolbar>
-    <ion-title></ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Back</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
-
   <div class="container">
     <ion-button (click)="dismissModal()" color="dark" class="corner-button">
       <ion-icon name="arrow-back-outline" color="light"></ion-icon>
     </ion-button>
   </div>
 
-  <ion-card color="">
+  <ion-card>
     <ion-card-header>
       <ion-card-title>{{ getRoomName(order.id_room) }}</ion-card-title>
       <ion-card-subtitle>Details</ion-card-subtitle>
     </ion-card-header>
-  
+
     <ion-card-content>
-      <ion-list lines="inset">
+      <ion-list lines="none">
         <ion-item>
           <ion-label>{{ order?.check_in }}</ion-label>
           <ion-note slot="end">Check in</ion-note>
@@ -36,16 +25,23 @@
           <ion-label>{{ order?.order_time }}</ion-label>
           <ion-note slot="end">Time</ion-note>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label><span>{{ order?.price_order }}</span></ion-label>
-          <ion-note slot="end">Total Price</ion-note>
-        </ion-item>
+        <ng-container *ngIf="order?.status_order === 'Booking'">
+          <ion-item lines="none">
+            <ion-label><span>{{ order?.price_order }}</span></ion-label>
+            <ion-note slot="end">Total Price</ion-note>
+          </ion-item>
+        </ng-container>
       </ion-list>
-      <ion-button expand="block" color="dark">Pay</ion-button>
-      <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Cancel</ion-button>
-      </ion-card-content>
+      <ng-container *ngIf="order?.status_order === 'Booking'">
+        <ion-button expand="block" color="dark">Pay</ion-button>
+        <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Cancel</ion-button>
+      </ng-container>
+      <ng-container *ngIf="order?.status_order === 'Live'">
+        <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Check out</ion-button>
+      </ng-container>
+      <ng-container *ngIf="order?.status_order === 'Expired'">
+        <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Delete</ion-button>
+      </ng-container>
+    </ion-card-content>
   </ion-card>
-
-
-  <br><br><br><br><br>
 </ion-content>

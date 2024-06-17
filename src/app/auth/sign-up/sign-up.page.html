@@ -1,0 +1,20 @@
+<ion-content [fullscreen]="true" class="ion-text-center grid-container">
+  
+  <div id="container">
+    <strong>Register</strong>
+
+    <ion-input [(ngModel)]="name" label="name" label="Name" label-placement="floating" fill="solid" placeholder="ex:Tyr" aria-label="" color="" name="name"></ion-input>
+
+    <ion-input [(ngModel)]="email" label="Email" label="Email" label-placement="floating" fill="solid" placeholder="ex:tyr@gmail.com" aria-label="" color="" name="email"></ion-input>
+
+    <ion-input [(ngModel)]="password" type="password" label="Password" label-placement="floating" fill="solid" placeholder="min:8 character" aria-label="" color="" name="password"></ion-input>
+
+    <ion-button class="login-btn" (click)="register()" expand="block" size="large" fill="outline" color="">Register</ion-button>
+    <p>Or</p>
+
+    <ion-button class="" expand="block" size="large" fill="outline" color="primary" (click)="google()">
+      <ion-icon name="logo-google"></ion-icon>
+      
+    </ion-button>
+  </div>
+</ion-content>
