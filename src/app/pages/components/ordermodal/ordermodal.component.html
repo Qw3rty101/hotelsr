@@ -20,8 +20,16 @@
     <ion-card-content>
       <div class="container-room">
         <h2>{{ room.name_room }}</h2>
-        <div class="price-container">
-          <h3><span>{{ room.price }}</span></h3>
+        <div class="status-container">
+          @if(room.qty == 0) {
+            <ion-text class="danger">
+              <h3>Not Avaible</h3>
+            </ion-text>
+          } @else {
+            <ion-text class="success">
+              <h3>Avaible</h3>
+            </ion-text>
+          }
         </div>
       </div>
       <p>Karawang, Jawa Barat</p>

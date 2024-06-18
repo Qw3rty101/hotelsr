@@ -111,8 +111,10 @@ export class OrderPage implements OnInit {
       case 1:
         return 'Raffel Room';
       case 2:
-        return 'Cupid Room';
+        return 'Laffrel Room';
       case 3:
+        return 'Cupid Room';
+      case 4:
         return 'Meeting Room';
       default:
         return 'Unknown Room';

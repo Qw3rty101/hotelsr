@@ -44,14 +44,26 @@ img {
     font-weight: 620;
 }
 
-.card-title h3 {
+.card-title .success h3 {
     margin-right: 10px;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 620;
     position: absolute;
     top: 50%; 
     right: 10px; 
     transform: translateY(-50%); 
+    color: green;
+}
+
+.card-title .danger h3 {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: 620;
+    position: absolute;
+    top: 50%; 
+    right: 10px; 
+    transform: translateY(-50%); 
+    color: red;
 }
 
 b {
@@ -72,7 +84,7 @@ b {
     justify-content: space-between;
   }
   
-.price-container {
+.status-container {
     text-align: right;
     margin-right: 20px;
 }

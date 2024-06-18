@@ -51,36 +51,42 @@ export class SignInPage implements OnInit {
       message: 'Loading...',
       duration: 4000,
     });
-
+  
     await loading.present();
-
-    this.authService.login(this.email, this.password).subscribe({
-      next: async (response) => {
-        await loading.dismiss(); // Tutup loading setelah menerima respons
-        if (response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user_data', JSON.stringify(response));
-          this.presentToast('Selamat Datang', 'top');
-          
-          console.log(response.role)
-          if(response.role === 'admin') {
-            this.router.navigate(['/room']);
-
+  
+    this.authService.login(this.email, this.password)
+      .subscribe({
+        next: async (response) => {
+          await loading.dismiss();
+          if (response.token) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user_data', JSON.stringify(response));
+            this.presentToast('Selamat Datang', 'top');
+            
+            console.log(response.role);
+            if (response.role === 'admin') {
+              this.router.navigate(['/room']);
+            } else {
+              this.router.navigate(['/dashboard']);
+            }
           } else {
-            this.router.navigate(['/dashboard']);
+            this.errorMessage = response.message || 'Email atau password salah!';
+            this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
           }
-        } else {
-          this.errorMessage = response.message || 'Email atau password salah!';
+        },
+        error: async (error) => {
+          await loading.dismiss();
+          
+          if (error.status === 429) {
+            this.errorMessage = error.error;
+          } else {
+            this.errorMessage = 'Email atau password salah!';
+          }
           this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
         }
-      },
-      error: async (error) => {
-        await loading.dismiss(); // Tutup loading jika ada error
-        this.errorMessage = 'Email atau password salah!';
-        this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
-      }
-    });
+      });
   }
+  
 
   async google() {
     this.authService.registerWithGoogle();

@@ -23,8 +23,14 @@ export class DashboardPage implements OnInit {
 
   // rooms = roomsData;
 
-  constructor(private modalController: ModalController, private roomService: RoomService, private authService: AuthService, private userService: UserService, private router: Router) { }
-
+  constructor(
+    private modalController: ModalController,
+    private roomService: RoomService,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+  
   ngOnInit() {
     this.fetchRooms();
     this.getUserData();

@@ -44,6 +44,7 @@ export class OrdermodalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.room)
     const dataString = localStorage.getItem('user_data');
     if (dataString) {
       const userData = JSON.parse(dataString);

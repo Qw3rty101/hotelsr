@@ -7,8 +7,8 @@ import { Order } from '../interfaces/order';
   providedIn: 'root'
 })
 export class OrderService {
-  // private apiUrl = 'http://127.0.0.1:8000/api/order';
-  private apiUrl = 'https://fawazpbf.vyst.my.id/api/order';
+  private apiUrl = 'http://127.0.0.1:8000/api/order';
+  // private apiUrl = 'https://fawazpbf.vyst.my.id/api/order';
 
   constructor(private http: HttpClient) { }
 
