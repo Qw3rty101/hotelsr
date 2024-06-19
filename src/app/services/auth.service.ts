@@ -10,7 +10,7 @@ import { tap, map } from 'rxjs/operators';
 export class AuthService {
   // private apiUrl = 'http://127.0.0.1:8000/api/login';
   private apiUrl = 'https://fawazpbf.vyst.my.id/api/login';
-  private urlRegis = 'http://127.0.0.1:8000/api/register';
+  private urlRegis = 'https://fawazpbf.vyst.my.id/api/register';
   private urlGoogle = 'https://fawazpbf.vyst.my.id/auth/google';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
