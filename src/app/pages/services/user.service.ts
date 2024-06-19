@@ -7,8 +7,8 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://127.0.0.1:8000/api/user';
-  // private apiUrl = 'https://fawazpbf.vyst.my.id/api/user';
+  // private apiUrl = 'http://127.0.0.1:8000/api/user';
+  private apiUrl = 'https://fawazpbf.vyst.my.id/api/user';
 
   constructor(private http: HttpClient) { }
 

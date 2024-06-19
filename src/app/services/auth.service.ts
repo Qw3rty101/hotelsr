@@ -8,8 +8,8 @@ import { tap, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/api/login';
-  // private apiUrl = 'https://fawazpbf.vyst.my.id/api/login';
+  // private apiUrl = 'http://127.0.0.1:8000/api/login';
+  private apiUrl = 'https://fawazpbf.vyst.my.id/api/login';
   private urlRegis = 'http://127.0.0.1:8000/api/register';
   private urlGoogle = 'https://fawazpbf.vyst.my.id/auth/google';
   private currentUserSubject: BehaviorSubject<any>;
