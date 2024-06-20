@@ -21,19 +21,19 @@ export class SignInPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const dataString = localStorage.getItem('user_data');
-    if (dataString) {
-      const userData = JSON.parse(dataString);
-      if(userData.role === 'admin') {
-        this.router.navigate(['/room']);
-  
-      } else {
-        this.router.navigate(['/dashboard']);
-      }
-      console.log(userData.role);
-    } else {
-      console.error('Data pengguna tidak ditemukan di localStorage');
-    }
+    // const dataString = localStorage.getItem('user_data');
+    // if (dataString) {
+    //   const userData = JSON.parse(dataString);
+    //   if(userData.role === 'admin') {
+    //     this.router.navigate(['/room']);
+
+    //   } else {
+    //     this.router.navigate(['/dashboard']);
+    //   }
+    //   console.log(userData.role);
+    // } else {
+    //   console.error('Data pengguna tidak ditemukan di localStorage');
+    // }
   }
 
   async presentToast(message: string, position: 'top' | 'middle' | 'bottom' = 'bottom') {
@@ -51,9 +51,11 @@ export class SignInPage implements OnInit {
       message: 'Loading...',
       duration: 4000,
     });
-  
+
     await loading.present();
-  
+
+    // const responseLogin = this.authService.login2()
+
     this.authService.login(this.email, this.password)
       .subscribe({
         next: async (response) => {
@@ -62,7 +64,7 @@ export class SignInPage implements OnInit {
             localStorage.setItem('token', response.token);
             localStorage.setItem('user_data', JSON.stringify(response));
             this.presentToast('Selamat Datang', 'top');
-            
+
             console.log(response.role);
             if (response.role === 'admin') {
               this.router.navigate(['/room']);
@@ -76,7 +78,7 @@ export class SignInPage implements OnInit {
         },
         error: async (error) => {
           await loading.dismiss();
-          
+
           if (error.status === 429) {
             this.errorMessage = error.error;
           } else {
@@ -86,7 +88,7 @@ export class SignInPage implements OnInit {
         }
       });
   }
-  
+
 
   async google() {
     this.authService.registerWithGoogle();

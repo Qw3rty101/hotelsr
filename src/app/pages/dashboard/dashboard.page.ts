@@ -2,7 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { OrdermodalComponent } from '../components/ordermodal/ordermodal.component'; 
+import { OrdermodalComponent } from '../components/ordermodal/ordermodal.component';
 
 import { roomsData } from '../room.data';
 
@@ -30,7 +30,7 @@ export class DashboardPage implements OnInit {
     private userService: UserService,
     private router: Router
   ) {}
-  
+
   ngOnInit() {
     this.fetchRooms();
     this.getUserData();
@@ -46,15 +46,18 @@ export class DashboardPage implements OnInit {
 
   getUserData() {
     const currentUser = this.authService.getCurrentUser();
-    // console.log('Current user:', currentUser);
-  
+
     if (currentUser) {
       this.user = currentUser;
-      // console.log('User data:', this.user);
+      console.log('User data:', this.user);
+      console.log('Current user role:', currentUser.role);
+    } else {
+      console.log('No current user data found');
     }
   }
-  
-  
+
+
+
   fetchRooms() {
     this.roomService.getRooms().subscribe((data: any) => {
       this.rooms = data.map((room: any) => ({
@@ -66,8 +69,8 @@ export class DashboardPage implements OnInit {
       console.error('Error fetching rooms', error);
     });
   }
-  
-  
+
+
   async openModal(roomData: any) {
     const modal = await this.modalController.create({
       component: OrdermodalComponent,

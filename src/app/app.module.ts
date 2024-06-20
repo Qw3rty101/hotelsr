@@ -9,12 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptorService } from './services/session-interceptor.service';
-import { TabsComponent } from './pages/components/tabs/tabs.component';
-import { TabsModule } from './pages/components/tabs/tabs.module';
+import { TabComponent } from './tab/tab.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TabsModule],
+  declarations: [AppComponent, TabComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptorService, multi: true }
