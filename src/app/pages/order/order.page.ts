@@ -41,6 +41,12 @@ export class OrderPage implements OnInit {
     }
   }
 
+  handleRefresh(event:any) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+
   getUserData() {
     const currentUser = this.authService.getCurrentUser();
     console.log('Current user:', currentUser);

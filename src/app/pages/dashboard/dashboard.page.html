@@ -1,4 +1,7 @@
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-content class="ion-padding">
     <div class="flex-container">
         <h1>Welcome {{ user.name }},</h1>
@@ -16,10 +19,10 @@
             <ion-icon name="star"></ion-icon>
             <ion-icon name="star"></ion-icon>
             <br>
-            Date Room
+            Cupid Room
             <br>
             <span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, dicta.
+              Romantic room for intimate gatherings.
             </span>
           </h3>
         </div>

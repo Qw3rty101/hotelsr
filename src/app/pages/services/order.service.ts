@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://127.0.0.1:8000/api/order';
+  // private apiUrl = 'http://127.0.0.1:8000/api/order';
   httpHeaders: HttpHeaders = new HttpHeaders({
     'x-api-key': environment.apiKey,
   });
@@ -36,6 +36,7 @@ export class OrderService {
   checkOrder(orderId: number): Observable<Order> {
     return this.http.post<Order>(
       environment.apiUrl + `/api/order/checkStatus/${orderId}`,
+      {},
       {headers: this.httpHeaders}
     );
   }  
