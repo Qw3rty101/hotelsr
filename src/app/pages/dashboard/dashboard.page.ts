@@ -35,13 +35,13 @@ export class DashboardPage implements OnInit {
     this.fetchRooms();
     this.getUserData();
 
-    const dataString = localStorage.getItem('user_data');
-    if (dataString) {
-      const userData = JSON.parse(dataString);
-      this.user = userData;
-    } else {
-      this.router.navigate(['/sign-in']);
-    }
+    // const dataString = localStorage.getItem('user_data');
+    // if (dataString) {
+    //   const userData = JSON.parse(dataString);
+    //   this.user = userData;
+    // } else {
+    //   this.router.navigate(['/sign-in']);
+    // }
   }
 
   getUserData() {

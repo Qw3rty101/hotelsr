@@ -1,23 +1,31 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+// import { HttpHeaders } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   // private apiUrl = 'http://127.0.0.1:8000/api/login';
-  private apiUrl = 'https://fawazpbf.vyst.my.id/api/login';
+  // private apiUrl = 'https://fawazpbf.vyst.my.id/api/login';
   private urlRegis = 'https://fawazpbf.vyst.my.id/api/register';
   private urlGoogle = 'https://fawazpbf.vyst.my.id/auth/google';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
+  httpHeaders:HttpHeaders = new HttpHeaders({
+    'x-api-key': environment.apiKey
+  })
+
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(null);
     this.currentUser = this.currentUserSubject.asObservable();
+
+    
   }
 
   getCurrentUser(): any {
@@ -25,7 +33,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { email, password }).pipe(
+    return this.http.post<any>(environment.apiUrl + "/api/login", { email, password }, { headers:this.httpHeaders }).pipe(
       map(response => {
         if (response.access_token && response.session_id) {
           sessionStorage.setItem('session_id', response.session_id);
@@ -86,5 +94,9 @@ export class AuthService {
   // registerWithGoogle(): Observable<any> {
   //   return this.http.get<any>(this.urlGoogle);
   // }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token')
+  }
   
 }
