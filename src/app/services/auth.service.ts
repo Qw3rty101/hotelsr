@@ -1,13 +1,17 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaderResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 // import { HttpHeaders } from '@capacitor/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   // private apiUrl = 'http://127.0.0.1:8000/api/login';
@@ -17,62 +21,94 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  httpHeaders:HttpHeaders = new HttpHeaders({
-    'x-api-key': environment.apiKey
-  })
+  httpHeaders: HttpHeaders = new HttpHeaders({
+    'x-api-key': environment.apiKey,
+  });
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(null);
     this.currentUser = this.currentUserSubject.asObservable();
-
-    
   }
 
   getCurrentUser(): any {
-    return this.currentUserSubject.value;
+    const dataUser = localStorage.getItem('user_data');
+    return dataUser ? JSON.parse(dataUser) : null;
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(environment.apiUrl + "/api/login", { email, password }, { headers:this.httpHeaders }).pipe(
-      map(response => {
-        if (response.access_token && response.session_id) {
-          sessionStorage.setItem('session_id', response.session_id);
+    return this.http
+      .post<any>(
+        environment.apiUrl + '/api/login',
+        { email, password },
+        { headers: this.httpHeaders }
+      )
+      .pipe(
+        map((response) => {
+          if (response.access_token && response.session_id) {
+            sessionStorage.setItem('session_id', response.session_id);
 
-          const userData = {
-            id: response.user.id,
-            email: response.user.email,
-            name: response.user.name,
-            role: response.user.role,
-            token: response.access_token
-          };
-          this.currentUserSubject.next(userData);
+            const userData = {
+              id: response.user.id,
+              email: response.user.email,
+              name: response.user.name,
+              role: response.user.role,
+              token: response.access_token,
+            };
+            this.currentUserSubject.next(userData);
 
-          return userData;
-        } else {
-          throw new Error('Login failed');
-        }
-      }),
-      tap(user => {
-        localStorage.setItem('token', user.token);
-      })
-    );
+            return userData;
+          } else {
+            throw new Error('Login failed');
+          }
+        }),
+        tap((user) => {
+          localStorage.setItem('token', user.token);
+        })
+      );
   }
 
-  register(registerData: {name: string, email: string, password: string, role: string}): Observable<any> {
+  // login2(loginData: object) {
+  //   this.http
+  //     .post(environment.apiUrl + '/api/login', loginData, {
+  //       headers: this.httpHeaders,
+  //     })
+  //     .subscribe((response: any) => {
+  //       if (response.access_token && response.session_id) {
+  //         const userData = {
+  //           id: response.user.id,
+  //           email: response.user.email,
+  //           name: response.user.name,
+  //           role: response.user.role,
+  //         };
+
+  //         localStorage.setItem('user_data', JSON.stringify(userData));
+  //         localStorage.setItem('token', response.token)
+  //       }
+  //     });
+  // }
+
+  register(registerData: {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+  }): Observable<any> {
     return this.http.post<any>(this.urlRegis, registerData);
   }
 
   registerWithGoogle(): void {
-    const url = `${this.urlGoogle}?redirect_uri=${encodeURIComponent(window.location.origin)}/auth/google/callback`;
+    const url = `${this.urlGoogle}?redirect_uri=${encodeURIComponent(
+      window.location.origin
+    )}/auth/google/callback`;
     const newWindow = window.open(url, '_blank');
-  
+
     (newWindow ?? window).focus();
-  
+
     const handleRedirect = (event: WindowEventMap['message']) => {
       if (event.origin !== window.location.origin) {
         return;
       }
-  
+
       if (event.data.type === 'google-auth') {
         if (event.data.access_token) {
           const userData = {
@@ -85,9 +121,8 @@ export class AuthService {
         newWindow?.close();
       }
       // console.log(event.data.access_token)
-
     };
-  
+
     window.addEventListener('message', handleRedirect);
   }
 
@@ -96,7 +131,6 @@ export class AuthService {
   // }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token')
+    return !!localStorage.getItem('token');
   }
-  
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 // import { AuthGuard } from './auth/auth.guard';
 import { AuthRedirectGuard } from './guards/auth-redirect.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -13,33 +13,28 @@ const routes: Routes = [
     children: [
       {
       path: "",
-      redirectTo: "dashboard",
-      pathMatch: 'full'
+      pathMatch: 'full',
+      redirectTo: "dashboard"
       },
       {
         path: 'dashboard',
         loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule),
-        canActivate: [AuthGuard]
       },
       {
         path: 'order',
         loadChildren: () => import('./pages/order/order.module').then( m => m.OrderPageModule),
-        canActivate: [AuthGuard]
       },
       {
         path: 'account',
         loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule),
-        canActivate: [AuthGuard]
       },
       {
         path: 'room',
         loadChildren: () => import('./admin/room/room.module').then( m => m.RoomPageModule),
-        canActivate: [AuthGuard]
       },
       {
         path: 'user',
         loadChildren: () => import('./admin/user/user.module').then( m => m.UserPageModule),
-        canActivate: [AuthGuard]
       },
     ]
   },
@@ -63,12 +58,12 @@ const routes: Routes = [
     loadChildren: () => import('./auth/welcome/welcome.module').then( m => m.WelcomePageModule),
     canActivate: [AuthRedirectGuard]
   },
- 
-  
+
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes , {preloadingStrategy: PreloadAllModules}) ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
