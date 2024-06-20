@@ -8,8 +8,6 @@ import { OrderPageRoutingModule } from './order-routing.module';
 
 import { OrderPage } from './order.page';
 
-import { TabsModule } from '../components/tabs/tabs.module';
-
 import { CompleteOrderModule } from '../components/completeorder/completeorder.module';
 
 
@@ -19,7 +17,6 @@ import { CompleteOrderModule } from '../components/completeorder/completeorder.m
     FormsModule,
     IonicModule,
     OrderPageRoutingModule,
-    TabsModule,
     CompleteOrderModule
   ],
   declarations: [OrderPage]

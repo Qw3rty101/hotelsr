@@ -8,7 +8,6 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 
-import { TabsModule } from '../components/tabs/tabs.module';
 
 import { OrdermodalModule } from '../components/ordermodal/ordermodal.module';
 
@@ -21,7 +20,6 @@ import { OrdermodalModule } from '../components/ordermodal/ordermodal.module';
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    TabsModule,
     OrdermodalModule
     
   ],

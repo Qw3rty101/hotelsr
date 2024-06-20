@@ -3,12 +3,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 // import { AuthGuard } from './auth/auth.guard';
 import { AuthRedirectGuard } from './guards/auth-redirect.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { TabsComponent } from './pages/components/tabs/tabs.component';
+import { TabComponent } from './tab/tab.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TabsComponent,
+    component: TabComponent,
     canActivate: [AuthGuard],
     children: [
       {

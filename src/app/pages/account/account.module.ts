@@ -8,7 +8,6 @@ import { AccountPageRoutingModule } from './account-routing.module';
 
 import { AccountPage } from './account.page';
 
-import { TabsModule } from '../components/tabs/tabs.module';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { TabsModule } from '../components/tabs/tabs.module';
     FormsModule,
     IonicModule,
     AccountPageRoutingModule,
-    TabsModule
   ],
   declarations: [AccountPage]
 })
