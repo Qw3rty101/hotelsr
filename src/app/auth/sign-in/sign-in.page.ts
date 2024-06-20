@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import {
+  LoadingController,
+  Platform,
+  ToastController,
+  isPlatform,
+} from '@ionic/angular';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,6 +18,7 @@ export class SignInPage implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string | null = null;
+  platform: any;
 
   constructor(
     private router: Router,
@@ -20,13 +27,22 @@ export class SignInPage implements OnInit {
     private toastController: ToastController
   ) {}
 
+  initializeApp() {
+    GoogleAuth.initialize({
+      clientId:
+        '122388841545-l5qkuqh82ov7rtbnmuuvj3mtev7a7gr7.apps.googleusercontent.com',
+      scopes: ['profile', 'email'],
+      grantOfflineAccess: true,
+    });
+  }
+
   ngOnInit() {
+    this.initializeApp();
     // const dataString = localStorage.getItem('user_data');
     // if (dataString) {
     //   const userData = JSON.parse(dataString);
     //   if(userData.role === 'admin') {
     //     this.router.navigate(['/room']);
-
     //   } else {
     //     this.router.navigate(['/dashboard']);
     //   }
@@ -36,7 +52,10 @@ export class SignInPage implements OnInit {
     // }
   }
 
-  async presentToast(message: string, position: 'top' | 'middle' | 'bottom' = 'bottom') {
+  async presentToast(
+    message: string,
+    position: 'top' | 'middle' | 'bottom' = 'bottom'
+  ) {
     const toast = await this.toastController.create({
       message,
       duration: 1000,
@@ -56,41 +75,72 @@ export class SignInPage implements OnInit {
 
     // const responseLogin = this.authService.login2()
 
-    this.authService.login(this.email, this.password)
-      .subscribe({
-        next: async (response) => {
-          await loading.dismiss();
-          if (response.token) {
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('user_data', JSON.stringify(response));
-            this.presentToast('Selamat Datang', 'top');
+    this.authService.login(this.email, this.password).subscribe({
+      next: async (response) => {
+        await loading.dismiss();
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('user_data', JSON.stringify(response));
+          this.presentToast('Selamat Datang', 'top');
 
-            console.log(response.role);
-            if (response.role === 'admin') {
-              this.router.navigate(['/room']);
-            } else {
-              this.router.navigate(['/dashboard']);
-            }
+          console.log(response.role);
+          if (response.role === 'admin') {
+            this.router.navigate(['/room']);
           } else {
-            this.errorMessage = response.message || 'Email atau password salah!';
-            this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
+            this.router.navigate(['/dashboard']);
           }
-        },
-        error: async (error) => {
-          await loading.dismiss();
-
-          if (error.status === 429) {
-            this.errorMessage = error.error;
-          } else {
-            this.errorMessage = 'Email atau password salah!';
-          }
-          this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
+        } else {
+          this.errorMessage = response.message || 'Email atau password salah!';
+          this.presentToast(
+            this.errorMessage ?? 'Error tidak diketahui',
+            'top'
+          );
         }
-      });
+      },
+      error: async (error) => {
+        await loading.dismiss();
+
+        if (error.status === 429) {
+          this.errorMessage = error.error;
+        } else {
+          this.errorMessage = 'Email atau password salah!';
+        }
+        this.presentToast(this.errorMessage ?? 'Error tidak diketahui', 'top');
+      },
+    });
   }
 
-
   async google() {
-    this.authService.registerWithGoogle();
+    try {
+      const googleUser = await GoogleAuth.signIn();
+      if (googleUser) {
+        const dataUser = {
+          name: googleUser.name,
+          email: googleUser.email,
+        };
+
+        const response = this.authService.registerWithGoogle(dataUser);
+        if (response) {
+          response.subscribe((res) => {
+            console.log(res)
+
+            localStorage.setItem('token', res.access_token);
+            localStorage.setItem('user_data', JSON.stringify({
+              id: res.user.id,
+              email: res.user.email,
+              name: res.user.name,
+              role: res.user.role,
+            }));
+
+            this.router.navigate(['/dashboard']);
+          });
+        }
+      } else {
+        console.log('invalid');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // this.authService.registerWithGoogle();
   }
 }

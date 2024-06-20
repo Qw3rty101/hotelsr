@@ -67,63 +67,29 @@ export class AuthService {
       );
   }
 
-  // login2(loginData: object) {
-  //   this.http
-  //     .post(environment.apiUrl + '/api/login', loginData, {
-  //       headers: this.httpHeaders,
-  //     })
-  //     .subscribe((response: any) => {
-  //       if (response.access_token && response.session_id) {
-  //         const userData = {
-  //           id: response.user.id,
-  //           email: response.user.email,
-  //           name: response.user.name,
-  //           role: response.user.role,
-  //         };
-
-  //         localStorage.setItem('user_data', JSON.stringify(userData));
-  //         localStorage.setItem('token', response.token)
-  //       }
-  //     });
-  // }
-
   register(registerData: {
     name: string;
     email: string;
     password: string;
     role: string;
   }): Observable<any> {
-    return this.http.post<any>(this.urlRegis, registerData);
+    return this.http.post<any>(
+      environment.apiUrl + '/api/register',
+      registerData
+    );
   }
 
-  registerWithGoogle(): void {
-    const url = `${this.urlGoogle}?redirect_uri=${encodeURIComponent(
-      window.location.origin
-    )}/auth/google/callback`;
-    const newWindow = window.open(url, '_blank');
-
-    (newWindow ?? window).focus();
-
-    const handleRedirect = (event: WindowEventMap['message']) => {
-      if (event.origin !== window.location.origin) {
-        return;
+  registerWithGoogle(UserData: {
+    name: string;
+    email: string;
+  }): Observable<any> {
+    return this.http.post<any>(
+      environment.apiUrl + '/api/loginGoogle',
+      UserData,
+      {
+        headers: this.httpHeaders,
       }
-
-      if (event.data.type === 'google-auth') {
-        if (event.data.access_token) {
-          const userData = {
-            token: event.data.access_token,
-            // Tambahkan properti lain dari data pengguna yang diterima dari backend
-          };
-          this.currentUserSubject.next(userData);
-          localStorage.setItem('token', event.data.access_token);
-        }
-        newWindow?.close();
-      }
-      // console.log(event.data.access_token)
-    };
-
-    window.addEventListener('message', handleRedirect);
+    );
   }
 
   // registerWithGoogle(): Observable<any> {

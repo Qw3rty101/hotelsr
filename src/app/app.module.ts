@@ -1,4 +1,5 @@
 
+import "@codetrix-studio/capacitor-google-auth";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';

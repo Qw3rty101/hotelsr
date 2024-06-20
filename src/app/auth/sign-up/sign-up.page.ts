@@ -75,7 +75,7 @@ export class SignUpPage implements OnInit {
   }
   
   async google() {
-    this.authService.registerWithGoogle();
+    // this.authService.registerWithGoogle();
   }
 
 }
