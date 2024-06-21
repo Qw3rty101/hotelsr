@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,6 +15,16 @@ export class SignUpPage implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string | null = null;
+  platform: any;
+
+  initializeApp() {
+    GoogleAuth.initialize({
+      clientId:
+        '122388841545-l5qkuqh82ov7rtbnmuuvj3mtev7a7gr7.apps.googleusercontent.com',
+      scopes: ['profile', 'email'],
+      grantOfflineAccess: true,
+    });
+  }
 
   constructor(
     private router: Router,
@@ -22,7 +33,9 @@ export class SignUpPage implements OnInit {
     private toastController: ToastController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initializeApp();
+  }
 
   async presentToast(message: string, position: 'top' | 'middle' | 'bottom' = 'bottom') {
     const toast = await this.toastController.create({
@@ -75,6 +88,36 @@ export class SignUpPage implements OnInit {
   }
   
   async google() {
+    try {
+      const googleUser = await GoogleAuth.signIn();
+      if (googleUser) {
+        const dataUser = {
+          name: googleUser.name,
+          email: googleUser.email,
+        };
+
+        const response = this.authService.registerWithGoogle(dataUser);
+        if (response) {
+          response.subscribe((res) => {
+            console.log(res)
+
+            localStorage.setItem('token', res.access_token);
+            localStorage.setItem('user_data', JSON.stringify({
+              id: res.user.id,
+              email: res.user.email,
+              name: res.user.name,
+              role: res.user.role,
+            }));
+
+            this.router.navigate(['/dashboard']);
+          });
+        }
+      } else {
+        console.log('invalid');
+      }
+    } catch (error) {
+      console.log(error);
+    }
     // this.authService.registerWithGoogle();
   }
 
