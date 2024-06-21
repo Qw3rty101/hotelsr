@@ -28,15 +28,18 @@ const routes: Routes = [
         path: 'account',
         loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule),
       },
-      {
-        path: 'room',
-        loadChildren: () => import('./admin/room/room.module').then( m => m.RoomPageModule),
-      },
-      {
-        path: 'user',
-        loadChildren: () => import('./admin/user/user.module').then( m => m.UserPageModule),
-      },
+      // 
     ]
+  },
+  {
+    path: 'room',
+    loadChildren: () => import('./admin/room/room.module').then( m => m.RoomPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./admin/user/user.module').then( m => m.UserPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'sign-in',

@@ -1,13 +1,25 @@
 <ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Accout Details</ion-card-title>
+      <ion-card-subtitle>Profile</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>Name :</ion-label>
+          <p class="ion-text-end">{{ user.name }}</p>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email :</ion-label>
+          <p class="ion-text-end">{{ user.email }}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-button expand="block" color="" size="default" fill="outline">
-          <ion-icon name="id-card-outline"></ion-icon>
-          Profile
-        </ion-button>
-      </ion-col>
       <ion-col>
         <ion-button expand="block" color="success" size="default" fill="outline">
           <ion-icon name="card-outline"></ion-icon>

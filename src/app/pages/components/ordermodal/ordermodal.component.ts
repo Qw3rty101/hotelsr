@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController,ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../interfaces/order';
@@ -30,7 +30,9 @@ export class OrdermodalComponent implements OnInit {
     private router: Router, 
     private authService: AuthService, 
     private orderService: OrderService, 
-    private userService: UserService) {
+    private userService: UserService,
+    private toastController: ToastController
+  ) {
 
     const today = new Date();
     const tomorrow = new Date(today);
@@ -44,7 +46,7 @@ export class OrdermodalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.room)
+    console.log(this.room.id_room)
     const dataString = localStorage.getItem('user_data');
     if (dataString) {
       const userData = JSON.parse(dataString);
@@ -65,6 +67,19 @@ export class OrdermodalComponent implements OnInit {
       console.error('this.room or this.room.price is not defined or not a number');
     }
     this.updateMinDateTime();
+  }
+
+  async presentToast(
+    message: string,
+    position: 'top' | 'middle' | 'bottom' = 'bottom'
+  ) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000,
+      position,
+    });
+
+    await toast.present();
   }
 
   updateMinDateTime() {
@@ -103,12 +118,14 @@ export class OrdermodalComponent implements OnInit {
     this.orderService.addOrder(newOrder).subscribe(response => {
       console.log('Order response:', response);
       this.modalController.dismiss();
+      this.presentToast('Berhasil di booking!', 'top')
       this.router.navigate(['./order']);
     }, error => {
       console.error('Order error:', error);
       if (error.status === 422) {
         console.error('Validation errors:', error.error);
       }
+      this.presentToast(error.error.error, 'top')
     });
   }
 

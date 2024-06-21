@@ -33,14 +33,14 @@
         </ng-container>
       </ion-list>
       <ng-container *ngIf="order?.status_order === 'Booking'">
-        <ion-button expand="block" color="dark">Pay</ion-button>
+        <ion-button expand="block" color="dark" (click)="pay(order?.id_order)">Pay</ion-button>
         <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Cancel</ion-button>
       </ng-container>
       <ng-container *ngIf="order?.status_order === 'Live'">
-        <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Check out</ion-button>
+        <ion-button expand="block" color="danger" (click)="checkoutNow(order?.id_order)">Check out</ion-button>
       </ng-container>
       <ng-container *ngIf="order?.status_order === 'Expired'">
-        <ion-button expand="block" color="danger" (click)="cancel(order?.id_order)">Delete</ion-button>
+        <ion-button expand="block" color="danger" (click)="delete(order?.id_order)">Delete</ion-button>
       </ng-container>
     </ion-card-content>
   </ion-card>

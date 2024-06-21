@@ -1,0 +1,28 @@
+ion-card {
+    box-shadow: none;
+}
+
+ion-item {
+  --padding-start: 0;
+}
+
+ion-item img {
+    height: 150%;
+    width: 150%;
+    border-radius: 2px;
+}
+
+ion-label {
+    font-weight: 200;
+}
+
+ion-header {
+    box-shadow: none;
+}
+
+.left-line {
+    border-left: 1px solid black;
+    padding-left: 10px;
+}
+
+
