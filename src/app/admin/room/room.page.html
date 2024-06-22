@@ -1,4 +1,7 @@
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Room Information</ion-card-title>
@@ -30,6 +33,7 @@
         </ion-item>
       </ion-list>
       <ion-button expand="block" (click)="setOpen(true)">Check details order</ion-button>
+      <ion-button color="danger" expand="block" (click)="logout()">logout</ion-button>
     </ion-card-content>
   </ion-card>
 

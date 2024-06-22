@@ -46,6 +46,12 @@ export class RoomPage implements OnInit {
     }
   }
 
+  handleRefresh(event:any) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+
   fetchRooms() {
     this.roomService.getRooms().subscribe(
       (data: any) => {
@@ -82,7 +88,7 @@ export class RoomPage implements OnInit {
     this.orderService.destroy(orderId).subscribe(
       (response) => {
         console.log('Order response:', response);
-        this.router.navigate(['./room']);
+        window.location.reload();
       },
       (error) => {
         console.error('Order error:', error);
@@ -91,5 +97,11 @@ export class RoomPage implements OnInit {
         }
       }
     );
+  }
+
+  logout() {
+    localStorage.removeItem('user_data');
+    localStorage.removeItem('token');
+    this.router.navigate(['welcome']);
   }
 }
