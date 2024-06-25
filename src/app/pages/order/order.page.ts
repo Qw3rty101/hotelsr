@@ -39,6 +39,22 @@ export class OrderPage implements OnInit {
     } else {
       this.router.navigate(['/sign-in']);
     }
+
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      if (userData.role === 'user') {
+        console.log(userData.role);
+        // this.router.navigate(['/room']);
+      } else {
+        console.log(userData.role);
+        localStorage.removeItem('user_data');
+        localStorage.removeItem('token');
+        this.router.navigate(['welcome']);
+      }
+      console.log(userData.role);
+    } else {
+      console.error('Data pengguna tidak ditemukan di localStorage');
+    }
   }
 
   handleRefresh(event:any) {
@@ -55,7 +71,7 @@ export class OrderPage implements OnInit {
       this.user = currentUser;
       // console.log('User data:', this.user);
       // console.log('User id:', this.user.id);
-      this.updateOrders();
+      // this.updateOrders();
     }
   }
 

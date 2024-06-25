@@ -35,13 +35,22 @@ export class DashboardPage implements OnInit {
     this.fetchRooms();
     this.getUserData();
 
-    // const dataString = localStorage.getItem('user_data');
-    // if (dataString) {
-    //   const userData = JSON.parse(dataString);
-    //   this.user = userData;
-    // } else {
-    //   this.router.navigate(['/sign-in']);
-    // }
+    const dataString = localStorage.getItem('user_data');
+    if (dataString) {
+      const userData = JSON.parse(dataString);
+      if (userData.role === 'user') {
+        console.log(userData.role);
+        // this.router.navigate(['/room']);
+      } else {
+        console.log(userData.role);
+        localStorage.removeItem('user_data');
+        localStorage.removeItem('token');
+        this.router.navigate(['welcome']);
+      }
+      console.log(userData.role);
+    } else {
+      console.error('Data pengguna tidak ditemukan di localStorage');
+    }
   }
 
   handleRefresh(event:any) {
