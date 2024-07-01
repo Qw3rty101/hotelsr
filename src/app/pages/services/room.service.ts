@@ -21,6 +21,14 @@ export class RoomService {
     });
   }
 
+  updateRoomQuantities(rooms: any[]): Observable<any> {
+    return this.http.put<any>(environment.apiUrl + '/api/room/update-quantities', { rooms }, {
+      headers:{
+        'x-api-key': environment.apiKey
+      }
+    });
+  }
+
   // getRoomById(id: number): Observable<any> {
   //   return this.http.get<any>(`${this.apiUrl}/${id}`);
   // }

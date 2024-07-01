@@ -21,18 +21,23 @@
             <img alt="Silhouette of mountains" [src]="room.img_path" />
           </ion-thumbnail>
           <ion-grid>
-            <ion-row>
+            <ion-row class="ion-align-items-center">
               <ion-col>
                 <ion-label>{{ room.name_room }}</ion-label>
               </ion-col>
-              <ion-col class="ion-text-end">
+              <!-- <ion-col class="ion-text-end">
                 {{ room.qty }}
+              </ion-col> -->
+              <ion-col class="ion-text-end">
+                <ion-input labelPlacement="floating" type="number" [(ngModel)]="room.qty">
+                </ion-input>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>
       </ion-list>
-      <ion-button expand="block" (click)="setOpen(true)">Check details order</ion-button>
+      <ion-button color="warning" expand="block" (click)="updateQuantities()">Update qty</ion-button>
+      <ion-button color="primary" expand="block" (click)="setOpen(true)">Check details order</ion-button>
       <ion-button color="danger" expand="block" (click)="logout()">logout</ion-button>
     </ion-card-content>
   </ion-card>

@@ -75,7 +75,8 @@ export class AuthService {
   }): Observable<any> {
     return this.http.post<any>(
       environment.apiUrl + '/api/register',
-      registerData
+      registerData,
+      { headers: this.httpHeaders }
     );
   }
 

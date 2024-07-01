@@ -99,6 +99,18 @@ export class RoomPage implements OnInit {
     );
   }
 
+  updateQuantities() {
+    this.roomService.updateRoomQuantities(this.rooms).subscribe(
+      (response) => {
+        console.log('Updated quantities:', response);
+        this.fetchRooms();
+      },
+      (error) => {
+        console.error('Error updating quantities', error);
+      }
+    );
+  }
+
   logout() {
     localStorage.removeItem('user_data');
     localStorage.removeItem('token');
